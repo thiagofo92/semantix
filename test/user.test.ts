@@ -7,7 +7,7 @@ interface HttpRequest {
 }
 
 
-class HttpRequestMock implements HttpRequest {
+class HttpRequestFake implements HttpRequest {
   async get (): Promise<any> {
     const pathXml = join(__dirname, 'data', 'mock', 'xml', 'users.xml')
     const userXml = readFile(pathXml)
@@ -15,7 +15,7 @@ class HttpRequestMock implements HttpRequest {
   }
 }
 
-type XMLFile<T> = {
+type XmlFile<T> = {
   data: { [key in keyof T]: T[key] }
 }
 
@@ -23,7 +23,7 @@ type XmlPagination = {
   pagination: { page: { _: '1', '$': Object[] }, limit: { _: string, '$': Object[] } },
 }
 
-type UsersXml = {
+type XmlUsers = {
   usersList: {
     '$': { type: string },
     item: {
@@ -37,7 +37,7 @@ type UsersXml = {
   } 
 }
 
-type Test = XMLFile<XmlPagination & UsersXml>
+type DataUsersXml = XmlFile<XmlPagination & XmlUsers>
 
 class ServiceXmlToJson {
   async execute<T = any>(xml: string): Promise<T | null> {
@@ -52,15 +52,9 @@ class ServiceXmlToJson {
 }
 
 describe('#Convert user data XML', () => {
-  test('Success to convert user data XML to JSON', async () => {
-    const httpRequest = new HttpRequestMock()
+  test('Success to convert user XML to Object', async () => {
+    const httpRequest = new HttpRequestFake()
     const userXml = await httpRequest.get()
-
-    // const expectedUser = {
-    //   fullName: 'Nakia Towne',
-    //   email:'Melissa.Stamm84@hotmail.com<'
-    // }
-
     const expectedUser = {
       avatar: "https://cdn.fakercloud.com/avatars/al_li_128.jpg",
       createdAt: "2022-02-23T05:20:06.524Z",
@@ -71,9 +65,16 @@ describe('#Convert user data XML', () => {
     }
 
     const service = new ServiceXmlToJson()
-    const users = await service.execute<Test>(userXml) as Test
+    const users = await service.execute<DataUsersXml>(userXml) as DataUsersXml
     const { usersList } = users.data
 
     expect(usersList.item[0]).toMatchObject(expectedUser)
+  })
+
+  test('Fail to convert file XML to Object', async () => {
+    const service = new ServiceXmlToJson()
+    const users = await service.execute<DataUsersXml>('')
+
+    expect(users).toBeNull()
   })
 })
