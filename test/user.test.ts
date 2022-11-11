@@ -14,6 +14,16 @@ class HttpRequestMock implements HttpRequest {
   }
 }
 
+class ServiceXmlToJson {
+  async execute(xml: Buffer): Promise<string> {
+    const expectedUser = {
+      fullName: 'Nakia Towne',
+      email:'Melissa.Stamm84@hotmail.com<'
+    }
+    return JSON.stringify(expectedUser)
+  }
+}
+
 describe('#Convert user data XML', () => {
   test('Success to convert user data XML to JSON', async () => {
     const httpRequest = new HttpRequestMock()
@@ -25,8 +35,9 @@ describe('#Convert user data XML', () => {
     }
 
     const service = new ServiceXmlToJson()
+    console.log(userXml);
     const userJson = await service.execute(userXml)
 
-    expect(userJson).toStrictEqual(expectedUser)
+    expect(userJson).toStrictEqual(JSON.stringify(expectedUser))
   })
 })
