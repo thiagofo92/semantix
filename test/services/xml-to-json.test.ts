@@ -10,7 +10,7 @@ interface HttpRequest {
 
 class HttpRequestFake implements HttpRequest {
   async get (): Promise<any> {
-    const pathXml = join(__dirname, 'data', 'mock', 'xml', 'users.xml')
+    const pathXml = join(__dirname, '..', 'data', 'mock', 'xml', 'users.xml')
     const userXml = readFile(pathXml)
     return userXml
   }
