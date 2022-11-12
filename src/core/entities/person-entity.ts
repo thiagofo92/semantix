@@ -1,5 +1,5 @@
 
-interface PersonEntity {
+export interface PersonEntity {
   fullName: string,
   email: string,
   address: string,
