@@ -1,8 +1,9 @@
+import { XmlToJsonRepository } from '@/app/repositories/xml-to-json-repository'
 import { XmlConvertError } from '@/core/errors/convert-error'
 import { Either, right, left } from '@/shared/error/Either'
 import { Parser } from 'xml2js'
 
-export class XmlToJsonService {
+export class XmlToJsonService implements XmlToJsonRepository {
   async execute<T = any>(xml: string): Promise<Either<XmlConvertError, T>> {
     try {
       const { parseStringPromise } = new Parser({ explicitArray: false, trim: true })
