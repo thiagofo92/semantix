@@ -1,5 +1,5 @@
 export interface PersonModel {
-  id: number
+  id: string
   firstName: string
   lastName: string
   email: string
@@ -10,16 +10,16 @@ export interface PersonModel {
 }
 
 export interface PersonContactModel {
-  id: number
-  userId: number
+  id: string
+  userId: string
   name: string
   phoneNumber: string
   email: string
 }
 
 export interface PersonAddressModel {
-  id: number
-  userId: number
+  id: string
+  userId: string
   street: string
   city: string
   state: string
