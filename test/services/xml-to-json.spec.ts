@@ -6,7 +6,6 @@ import { XmlConvertError } from '@/core/errors/convert-error'
 import { XmlToJsonService } from '@/infra/services/convert/xml-to-json'
 import { HttpRequestFake } from './mock/RequestHttpsFake'
 import { RequestHttps } from '@/infra/services/http/request-https'
-import { RequestHttpsGetError } from '@/core/errors'
 
 describe('#Convert user data XML', () => {
   test('Success to convert user XML to Object', async () => {
@@ -83,22 +82,5 @@ describe('#Convert user data XML', () => {
     const { usersList } = data
 
     expect(usersList.item[0]).toMatchObject(expectedUser)
-  })
-
-  test('Failt to request users', async () => {
-    const httpRequest = new RequestHttps()
-    const baseUrl = process.env.API_TECH_BASEURL || ''
-    const user = ''
-    const password = ''
-
-    const authorization = Buffer.from(`${user}:${password}`).toString('base64')
-
-    const response = await httpRequest.get<string>(`${baseUrl}/users?limit=2&page=1`, {
-      headers: {
-        Authorization: `Basic ${authorization}`
-      }
-    })
-
-    expect(response.value).toBeInstanceOf(RequestHttpsGetError)
   })
 })
