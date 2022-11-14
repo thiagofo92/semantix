@@ -8,7 +8,7 @@ import { HttpRequestFake } from './mock/RequestHttpsFake'
 describe('#Convert user data XML', () => {
   test('Success to convert user XML to Object', async () => {
     const httpRequest = new HttpRequestFake()
-    const response = await httpRequest.get<string>()
+    const response = await httpRequest.get<string>('')
 
     const expectedUser = {
       avatar: 'https://cdn.fakercloud.com/avatars/al_li_128.jpg',
