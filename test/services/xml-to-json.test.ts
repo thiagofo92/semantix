@@ -1,13 +1,14 @@
+import { describe, expect, test } from 'vitest'
+
 import { DataUsersXmlEntity } from '@/core/entities/xml-entity'
 import { XmlConvertError } from '@/core/errors/convert-error'
 import { XmlToJsonService } from '@/infra/services/convert/xml-to-json'
-import { describe, expect, test } from 'vitest'
 import { HttpRequestFake } from './mock/RequestHttpsFake'
 
 describe('#Convert user data XML', () => {
   test('Success to convert user XML to Object', async () => {
     const httpRequest = new HttpRequestFake()
-    const reponse = await httpRequest.get<string>()
+    const response = await httpRequest.get<string>()
 
     const expectedUser = {
       avatar: 'https://cdn.fakercloud.com/avatars/al_li_128.jpg',
@@ -18,9 +19,14 @@ describe('#Convert user data XML', () => {
       lastName: 'Towne'
     }
 
+    if (response.isLeft()) {
+      throw Error('Error to convert user XML to Object')
+    }
+
     const service = new XmlToJsonService()
-    const { value } = await service.execute<DataUsersXmlEntity>(reponse.data)
-    const { data } = value as DataUsersXmlEntity
+
+    const { value: xml } = await service.execute<DataUsersXmlEntity>(response.value.data)
+    const { data } = xml as DataUsersXmlEntity
     const { usersList } = data
 
     expect(usersList.item[0]).toMatchObject(expectedUser)
