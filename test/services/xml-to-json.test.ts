@@ -1,31 +1,8 @@
+import { DataUsersXmlEntity } from '@/core/entities/xml-entity'
 import { XmlConvertError } from '@/core/errors/convert-error'
 import { XmlToJsonService } from '@/infra/services/convert/xml-to-json'
 import { describe, expect, test } from 'vitest'
 import { HttpRequestFake } from './mock/RequestHttpsFake'
-
-interface XmlFile<T> {
-  data: { [key in keyof T]: T[key] }
-}
-
-interface XmlPagination {
-  pagination: { page: { _: '1', '$': Object[] }, limit: { _: string, '$': Object[] } }
-}
-
-interface XmlUsers {
-  usersList: {
-    '$': { type: string }
-    item: Array<{
-      createdAt: string
-      firstName: string
-      avatar: string
-      email: string
-      lastName: string
-      id: string
-    }>
-  }
-}
-
-type DataUsersXml = XmlFile<XmlPagination & XmlUsers>
 
 describe('#Convert user data XML', () => {
   test('Success to convert user XML to Object', async () => {
@@ -42,8 +19,8 @@ describe('#Convert user data XML', () => {
     }
 
     const service = new XmlToJsonService()
-    const { value } = await service.execute<DataUsersXml>(reponse.data)
-    const { data } = value as DataUsersXml
+    const { value } = await service.execute<DataUsersXmlEntity>(reponse.data)
+    const { data } = value as DataUsersXmlEntity
     const { usersList } = data
 
     expect(usersList.item[0]).toMatchObject(expectedUser)
@@ -51,7 +28,7 @@ describe('#Convert user data XML', () => {
 
   test('Fail to convert file XML to Object', async () => {
     const service = new XmlToJsonService()
-    const data = await service.execute<DataUsersXml>(null as any)
+    const data = await service.execute<DataUsersXmlEntity>(null as any)
 
     expect(data.value).toBeInstanceOf(XmlConvertError)
   })
