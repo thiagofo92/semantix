@@ -1,5 +1,5 @@
 import { PersonModel } from '@/app/models/person-model'
 
-export interface PersonUseCaseContract {
+export interface PersonContract {
   create: (person: PersonModel) => Promise<boolean>
 }
