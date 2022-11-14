@@ -10,7 +10,7 @@ import {
 } from '@/core/errors'
 import { Either, right } from '@/shared/error/Either'
 
-export class HttpRequestFake implements RequestHttpsRepository {
+export class RequesHttpstFake implements RequestHttpsRepository {
   async get <T = any>(url: string, options?: HeaderOptions): Promise<Either<RequestHttpsGetError, ResponseHttp<T>>> {
     const pathXml = join(__dirname, '..', '..', 'data', 'mock', 'xml', 'users.xml')
     const userXml = await readFile(pathXml)

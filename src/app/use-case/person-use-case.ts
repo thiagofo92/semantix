@@ -23,21 +23,39 @@ export class PersonUseCase implements PersonContract {
       addressNumber: '',
       phoneNumber: ''
     }
+    const indexContact = this.findFisrtId(person.contact)
+    const indexAddress = this.findFisrtId(person.address)
 
     personEntity.fullName = `${person.firstName} ${person.lastName}`
     personEntity.email = person.email
-    personEntity.address = person.address[0].street
-    personEntity.addressNumber = person.address[0].number
-    personEntity.phoneNumber = person.contact[0].phoneNumber
+    personEntity.address = person.address[indexAddress].street
+    personEntity.addressNumber = person.address[indexAddress].number
+    personEntity.phoneNumber = person.contact[indexContact].phoneNumber
 
     return personEntity
+  }
+
+  private findFisrtId (value: Array<Pick<{ id: string }, 'id'>>): number {
+    let indexAddress = -1
+    let currentlyId = 0
+    const { length } = value
+
+    for (let i = 0; i < length; i++) {
+      const { id } = value[i]
+      if (currentlyId < Number(id)) {
+        indexAddress = i
+        currentlyId = Number(id)
+      }
+    }
+
+    return indexAddress
   }
 
   private toPersonEntityArray (person: PersonModel[]): PersonEntity[] {
     const personEntity = person.map<PersonEntity>(item => ({
       fullName: `${item.firstName} ${item.lastName}`,
       email: item.email,
-      address: item.address[0].street,
+      address: item.address[].street,
       addressNumber: item.address[0].number,
       phoneNumber: item.contact[0].phoneNumber
     }))

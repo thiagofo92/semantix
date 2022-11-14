@@ -4,12 +4,12 @@ import { describe, expect, test } from 'vitest'
 import { DataUsersXmlEntity } from '@/core/entities/xml-entity'
 import { XmlConvertError } from '@/core/errors/convert-error'
 import { XmlToJsonService } from '@/infra/services/convert/xml-to-json'
-import { HttpRequestFake } from './mock/RequestHttpsFake'
+import { RequesHttpstFake } from './mock/RequestHttpsFake'
 import { RequestHttps } from '@/infra/services/http/request-https'
 
 describe('#Convert user data XML', () => {
   test('Success to convert user XML to Object', async () => {
-    const httpRequest = new HttpRequestFake()
+    const httpRequest = new RequesHttpstFake()
     const response = await httpRequest.get<string>('')
 
     const expectedUser = {
