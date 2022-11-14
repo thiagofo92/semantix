@@ -3,6 +3,6 @@ export interface PersonEntity {
   fullName: string
   email: string
   address: string
-  addressNumber: number
+  addressNumber: string
   phoneNumber: string
 }
