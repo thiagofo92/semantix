@@ -1,7 +1,6 @@
+import { XmlConvertError } from '@/core/errors/convert-error'
+import { XmlToJsonService } from '@/infra/services/convert/xml-to-json'
 import { describe, expect, test } from 'vitest'
-import { Parser } from 'xml2js'
-
-import { Either, left, right } from '@/shared/error/Either'
 import { HttpRequestFake } from './mock/RequestHttpsFake'
 
 interface XmlFile<T> {
@@ -28,25 +27,6 @@ interface XmlUsers {
 
 type DataUsersXml = XmlFile<XmlPagination & XmlUsers>
 
-class ServiceXmlToJson {
-  async execute<T = any>(xml: string): Promise<Either<XmlConvertError, T>> {
-    try {
-      const { parseStringPromise } = new Parser({ explicitArray: false, trim: true })
-      const convertedData = await parseStringPromise(xml)
-      return right(convertedData)
-    } catch (error: any) {
-      return left(new XmlConvertError(error.message))
-    }
-  }
-}
-
-class XmlConvertError extends Error {
-  constructor (message: string) {
-    super(message)
-    this.name = 'XmlConvertError'
-  }
-}
-
 describe('#Convert user data XML', () => {
   test('Success to convert user XML to Object', async () => {
     const httpRequest = new HttpRequestFake()
@@ -61,7 +41,7 @@ describe('#Convert user data XML', () => {
       lastName: 'Towne'
     }
 
-    const service = new ServiceXmlToJson()
+    const service = new XmlToJsonService()
     const { value } = await service.execute<DataUsersXml>(reponse.data)
     const { data } = value as DataUsersXml
     const { usersList } = data
@@ -70,7 +50,7 @@ describe('#Convert user data XML', () => {
   })
 
   test('Fail to convert file XML to Object', async () => {
-    const service = new ServiceXmlToJson()
+    const service = new XmlToJsonService()
     const data = await service.execute<DataUsersXml>(null as any)
 
     expect(data.value).toBeInstanceOf(XmlConvertError)
