@@ -1,6 +1,6 @@
 import { PersonEntity } from '@/core/entities/person-entity'
 import { PersonCreateError } from '@/core/errors/person-error'
-import { PersonRepository } from '@/core/repositories/person-repository'
+import { PersonRepository } from '@/app/repositories/person-repository'
 import { Either, left, right } from '@/shared/error/Either'
 
 export class PersonService implements PersonRepository {
