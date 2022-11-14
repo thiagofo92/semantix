@@ -1,9 +1,9 @@
 import { PersonEntity } from '@/core/entities/person-entity'
 import { PersonService } from '@/infra/services/db/memory'
 import { PersonModel } from '@/app/models/person-model'
-import { PersonUseCaseContract } from '@/core/contracts/person-contract'
+import { PersonContract } from '@/core/contract/person-contract'
 
-export class PersonUseCase implements PersonUseCaseContract {
+export class PersonUseCase implements PersonContract {
   constructor (private readonly personService: PersonService) {}
 
   async create (person: PersonModel): Promise<boolean> {
