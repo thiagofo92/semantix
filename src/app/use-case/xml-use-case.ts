@@ -1,4 +1,4 @@
-import { Users, XmlDataUsersUseCaseContract } from '@/core/contract/xml-contract'
+import { UsersRequestParams, XmlDataUsersUseCaseContract } from '@/core/contract/xml-contract'
 import {
   DataUsersAddressXmlEntity,
   DataUsersContactXmlEntity,
@@ -19,13 +19,13 @@ export class XmlUseCase implements XmlDataUsersUseCaseContract {
     this.authorization = Buffer.from(`${user}:${password}`).toString('base64')
   }
 
-  async getUsers (user: Users): Promise<PersonModel[]> {
+  async getUsers (user: UsersRequestParams): Promise<PersonModel[]> {
     const options = {
       headers: {
         Authorization: `Basic ${this.authorization}`
       },
       params: {
-        pagination: String(user.pagination),
+        page: String(user.page),
         limit: String(user.limit)
       }
     }
@@ -37,6 +37,8 @@ export class XmlUseCase implements XmlDataUsersUseCaseContract {
     const json = await this.xmlToJsonService.execute<DataUsersXmlEntity>(result.value.data)
 
     if (json.isLeft()) throw json.value
+
+    if (!json.value.data.usersList[0].item) return []
 
     const users = json.value.data.usersList[0].item.map(user => ({
       id: user.id[0],
