@@ -16,13 +16,15 @@ type Options = {
   [key in string]: string
 }
 
-export interface HeaderOptions {
+export interface RequestOptions {
+  params?: Options
+  query?: Options
   headers: Options
 }
 
 export interface RequestHttpsRepository {
-  get: <T = any>(url: string, options?: HeaderOptions) => Promise<Either<RequestHttpsGetError, ResponseHttp<T>>>
-  post: <T = any> (url: string, body: any, options?: HeaderOptions) => Promise<Either<RequestHttpsPostError, ResponseHttp<T>>>
-  put: <T = any> (url: string, body: any, options?: HeaderOptions) => Promise<Either<RequestHttpsPutError, ResponseHttp<T>>>
-  del: <T = any> (url: string, options?: HeaderOptions) => Promise<Either<RequestHttpsDelError, ResponseHttp<T>>>
+  get: <T = any>(url: string, options?: RequestOptions) => Promise<Either<RequestHttpsGetError, ResponseHttp<T>>>
+  post: <T = any> (url: string, body: any, options?: RequestOptions) => Promise<Either<RequestHttpsPostError, ResponseHttp<T>>>
+  put: <T = any> (url: string, body: any, options?: RequestOptions) => Promise<Either<RequestHttpsPutError, ResponseHttp<T>>>
+  del: <T = any> (url: string, options?: RequestOptions) => Promise<Either<RequestHttpsDelError, ResponseHttp<T>>>
 }
