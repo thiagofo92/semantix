@@ -1,4 +1,4 @@
-import { XmlConvertError } from '@/core/errors/convert-error'
+import { XmlConvertError } from '@/app/errors/convert-error'
 import { Either } from '@/shared/error/Either'
 
 export interface XmlToJsonRepository {

@@ -3,7 +3,7 @@ import { describe, test, expect } from 'vitest'
 import { readFile } from 'fs/promises'
 import { join } from 'path'
 import { RequestHttps } from '@/infra/services/http/request-https'
-import { RequestHttpsGetError } from '@/core/errors'
+import { RequestHttpsGetError } from '@/app/errors'
 
 describe('# Request HTTPS - API linkapi-desafio-tech', () => {
   test('Succes to request users', async () => {

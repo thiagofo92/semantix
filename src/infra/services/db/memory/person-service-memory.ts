@@ -1,5 +1,5 @@
 import { PersonEntity } from '@/core/entities/person-entity'
-import { PersonCreateError } from '@/core/errors/person-error'
+import { PersonCreateError } from '@/app/errors/person-error'
 import { PersonRepository } from '@/app/repositories/person-repository'
 import { Either, left, right } from '@/shared/error/Either'
 

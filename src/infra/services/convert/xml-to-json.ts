@@ -1,5 +1,5 @@
 import { XmlToJsonRepository } from '@/app/repositories/xml-to-json-repository'
-import { XmlConvertError } from '@/core/errors/convert-error'
+import { XmlConvertError } from '@/app/errors/convert-error'
 import { Either, right, left } from '@/shared/error/Either'
 import { Parser } from 'xml2js'
 

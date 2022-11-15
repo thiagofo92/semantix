@@ -7,7 +7,7 @@ import {
   RequestHttpsGetError,
   RequestHttpsPostError,
   RequestHttpsPutError
-} from '@/core/errors'
+} from '@/app/errors'
 import { Either, right } from '@/shared/error/Either'
 
 export class RequesHttpstFake implements RequestHttpsRepository {

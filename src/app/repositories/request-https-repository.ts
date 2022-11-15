@@ -3,7 +3,7 @@ import {
   RequestHttpsPostError,
   RequestHttpsDelError,
   RequestHttpsPutError
-} from '@/core/errors/http-request-error'
+} from '@/app/errors/http-request-error'
 import { Either } from '@/shared/error/Either'
 
 export interface ResponseHttp<T> {

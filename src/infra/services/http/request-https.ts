@@ -10,7 +10,7 @@ import {
   RequestHttpsGetError,
   RequestHttpsPostError,
   RequestHttpsPutError
-} from '@/core/errors/http-request-error'
+} from '@/app/errors/http-request-error'
 
 export class RequestHttps implements RequestHttpsRepository {
   async get <T = any>(url: string, options?: RequestOptions): Promise<Either<RequestHttpsGetError, ResponseHttp<T>>> {

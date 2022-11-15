@@ -2,7 +2,7 @@ import { describe, vi, expect, test } from 'vitest'
 import { faker } from '@faker-js/faker'
 import { PersonService } from '@/infra/services/db/memory'
 import { PersonUseCase } from '@/app/use-case'
-import { PersonCreateError } from '@/core/errors/person-error'
+import { PersonCreateError } from '@/app/errors/person-error'
 import { left } from '@/shared/error/Either'
 import { PersonWithAddressAndContactModel } from '../models/person-model'
 
