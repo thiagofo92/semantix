@@ -3,6 +3,7 @@ import { PersonEntity } from '../../core/entities/person-entity'
 import { PersonCreateError, PersonFindAllError } from '../errors/person-error'
 
 export interface PersonRepository {
-  create: (person: PersonEntity) => Promise<Either<PersonCreateError, boolean>>
+  createOne: (person: PersonEntity) => Promise<Either<PersonCreateError, boolean>>
+  createMany: (person: PersonEntity[]) => Promise<Either<PersonCreateError, boolean>>
   findAll: () => Promise<Either<PersonFindAllError, PersonEntity[]>>
 }

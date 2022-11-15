@@ -61,7 +61,7 @@ describe('# Use case to create the user in Mango DB', () => {
 
   test('Error when try to save data in DB', async () => {
     const { sut, personFake, personServiceMock } = factoryPerson()
-    vi.spyOn(personServiceMock, 'create').mockResolvedValueOnce(left(new PersonCreateError('Test')))
+    vi.spyOn(personServiceMock, 'createOne').mockResolvedValueOnce(left(new PersonCreateError('Test')))
     const result = await sut.create(personFake)
 
     expect(result).toStrictEqual(false)

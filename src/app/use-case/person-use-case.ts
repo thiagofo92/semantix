@@ -8,7 +8,7 @@ export class PersonUseCase implements PersonContract {
 
   async create (person: PersonWithAddressAndContactModel): Promise<boolean> {
     const personEntity = this.toPersonEntity(person)
-    const result = await this.personService.create(personEntity)
+    const result = await this.personService.createOne(personEntity)
 
     if (result.isLeft()) return false
 

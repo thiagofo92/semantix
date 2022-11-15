@@ -5,11 +5,21 @@ import { Either, left, right } from '@/shared/error/Either'
 import { PersonModel } from './schema'
 
 export class PersonServiceMongo implements PersonRepository {
-  async create (person: PersonEntity): Promise<Either<PersonCreateError, boolean>> {
+  async createOne (person: PersonEntity): Promise<Either<PersonCreateError, boolean>> {
     try {
       await PersonModel.create({
         ...person
       })
+
+      return right(true)
+    } catch (error: any) {
+      return left(new PersonCreateError(error.message))
+    }
+  }
+
+  async createMany (person: PersonEntity[]): Promise<Either<PersonCreateError, boolean>> {
+    try {
+      await PersonModel.insertMany(person)
 
       return right(true)
     } catch (error: any) {

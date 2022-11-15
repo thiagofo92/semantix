@@ -5,7 +5,7 @@ import { Either, left, right } from '@/shared/error/Either'
 
 export class PersonService implements PersonRepository {
   private readonly person: PersonEntity[] = []
-  async create (person: PersonEntity): Promise<Either<PersonCreateError, boolean>> {
+  async createOne (person: PersonEntity): Promise<Either<PersonCreateError, boolean>> {
     try {
       this.person.push(person)
       return right(true)
