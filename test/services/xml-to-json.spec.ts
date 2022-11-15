@@ -4,7 +4,7 @@ import { describe, expect, test } from 'vitest'
 import { DataUsersXmlEntity } from '@/core/entities/xml-entity'
 import { XmlConvertError } from '@/app/errors/convert-error'
 import { XmlToJsonService } from '@/infra/services/convert/xml-to-json'
-import { RequesHttpstFake } from './mock/RequestHttpsFake'
+import { RequesHttpstFake } from './mock/request-https-fake'
 import { RequestHttps } from '@/infra/services/http/request-https'
 
 describe('#Convert user data XML', () => {
