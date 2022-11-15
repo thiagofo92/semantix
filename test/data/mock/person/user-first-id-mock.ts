@@ -22,7 +22,7 @@ export function userAddressFirstIdMock (): PersonAddressModel {
     state: 'Illinois',
     zipcode: '93067-6844',
     country: 'Gibraltar',
-    number: 35,
+    number: '35',
     countryCode: 'AW'
   }
 }
