@@ -34,9 +34,27 @@ describe('# Use case to create the user in Mango DB', () => {
     expect(result).toStrictEqual(true)
   })
 
+  test('Create many users in DB', async () => {
+    const { sut, personFake } = factoryPerson()
+
+    const result = await sut.createMany([personFake])
+    const users = await sut.findAll()
+
+    expect(result).toStrictEqual(true)
+    expect(users.length).toBeGreaterThan(0)
+  })
+
   test('Error when try to save data in DB', async () => {
     const { sut, personFake, personServiceMock } = factoryPerson()
-    vi.spyOn(personServiceMock, 'createOne').mockResolvedValueOnce(left(new PersonCreateError('Test')))
+    vi.spyOn(personServiceMock, 'createMany').mockResolvedValueOnce(left(new PersonCreateError('Test create many')))
+    const result = await sut.createMany([personFake])
+
+    expect(result).toStrictEqual(false)
+  })
+
+  test('Error when try to save data in DB', async () => {
+    const { sut, personFake, personServiceMock } = factoryPerson()
+    vi.spyOn(personServiceMock, 'createOne').mockResolvedValueOnce(left(new PersonCreateError('Test create one')))
     const result = await sut.createOne(personFake)
 
     expect(result).toStrictEqual(false)
