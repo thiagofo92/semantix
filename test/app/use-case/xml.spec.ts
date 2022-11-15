@@ -1,7 +1,11 @@
 import 'dotenv/config'
-import { userAddressFirstIdMock, userContactFirstIdMock, userFirstIdMock } from '@test/data/mock/person/user-first-id-mock'
-import { RequesHttpstFake } from '@test/services/mock/RequestHttpsFake'
 import { describe, test, expect } from 'vitest'
+import {
+  userAddressFirstIdMock,
+  userContactFirstIdMock,
+  userFirstIdMock
+} from '@test/data/mock/person/user-first-id-mock'
+import { RequesHttpstFake } from '@test/services/mock/RequestHttpsFake'
 import { XmlUseCase } from '@/app/use-case/xml-use-case'
 import { XmlToJsonService } from '@/infra/services/convert/xml-to-json'
 import { Users } from '@/core/contract/xml-contract'
@@ -16,7 +20,7 @@ describe('# XML UseCase', () => {
     const password = process.env.API_TECH_PASSWORD || ''
 
     const xmlUseCase = new XmlUseCase(requestHttps, xmlToJsonService, user, password)
-    const expectedUser = userFirstIdMock()
+    const expectedUser = [userFirstIdMock()]
     const url = `${process.env.API_TECH_BASEURL || ''}/users`
     const usersParams: Users = {
       url,
