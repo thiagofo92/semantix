@@ -1,1 +1,1 @@
-export * from './person-entity-mock.ts'
+export * from './person-entity-mock'
