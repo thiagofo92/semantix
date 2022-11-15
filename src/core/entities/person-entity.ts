@@ -1,5 +1,6 @@
 
 export interface PersonEntity {
+  id?: string
   fullName: string
   email: string
   address: string
