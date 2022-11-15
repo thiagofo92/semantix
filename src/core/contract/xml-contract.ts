@@ -1,8 +1,8 @@
 import {
-  DataUsersXmlEntity,
-  DataUsersAddressXmlEntity,
-  DataUsersContactXmlEntity
-} from '../entities/xml-entity'
+  PersonModel,
+  PersonAddressModel,
+  PersonContactModel
+} from '@/app/models/person-model'
 
 export interface Login {
   user: string
@@ -16,7 +16,7 @@ export interface Users {
 }
 
 export interface XmlDataUsersUseCaseContract {
-  getUsers: (user: Users) => Promise<DataUsersXmlEntity>
-  getAddress: (url: string) => Promise<DataUsersAddressXmlEntity>
-  getContact: (url: string) => Promise<DataUsersContactXmlEntity>
+  getUsers: (user: Users) => Promise<PersonModel>
+  getAddress: (url: string) => Promise<PersonAddressModel>
+  getContact: (url: string) => Promise<PersonContactModel>
 }

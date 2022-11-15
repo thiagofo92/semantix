@@ -4,16 +4,16 @@ import { PersonService } from '@/infra/services/db/memory'
 import { PersonUseCase } from '@/app/use-case'
 import { PersonCreateError } from '@/core/errors/person-error'
 import { left } from '@/shared/error/Either'
-import { PersonModel } from '../models/person-model'
+import { PersonWithAddressAndContactModel } from '../models/person-model'
 
 interface Factory {
   sut: PersonUseCase
   personServiceMock: PersonService
-  personFake: PersonModel
+  personFake: PersonWithAddressAndContactModel
 }
 
 function factoryPerson (): Factory {
-  const personFake: PersonModel = {
+  const personFake: PersonWithAddressAndContactModel = {
     id: faker.datatype.number({ min: 1, max: 1 }),
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),

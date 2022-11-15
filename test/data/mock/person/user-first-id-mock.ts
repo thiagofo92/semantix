@@ -1,6 +1,6 @@
-import { PersonAddressModel, PersonContactModel, PersonModel } from '@/app/models/person-model'
+import { PersonAddressModel, PersonContactModel, PersonWithAddressAndContactModel } from '@/app/models/person-model'
 
-export function userFirstIdMock (): PersonModel {
+export function userFirstIdMock (): PersonWithAddressAndContactModel {
   return {
     id: '1',
     firstName: 'Nakia',

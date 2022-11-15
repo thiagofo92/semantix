@@ -1,4 +1,4 @@
-export interface PersonModel {
+export interface PersonWithAddressAndContactModel {
   id: string
   firstName: string
   lastName: string
@@ -6,6 +6,15 @@ export interface PersonModel {
   avatar: string
   contact: PersonContactModel[]
   address: PersonAddressModel[]
+  createdAt: string
+}
+
+export interface PersonModel {
+  id: string
+  firstName: string
+  lastName: string
+  email: string
+  avatar: string
   createdAt: string
 }
 

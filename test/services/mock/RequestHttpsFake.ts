@@ -1,7 +1,7 @@
 import { readFile } from 'fs/promises'
 import { join } from 'path'
 
-import { RequestHttpsRepository, HeaderOptions, ResponseHttp } from '@/app/repositories/request-https-repository'
+import { RequestHttpsRepository, RequestOptions, ResponseHttp } from '@/app/repositories/request-https-repository'
 import {
   RequestHttpsDelError,
   RequestHttpsGetError,
@@ -11,7 +11,7 @@ import {
 import { Either, right } from '@/shared/error/Either'
 
 export class RequesHttpstFake implements RequestHttpsRepository {
-  async get <T = any>(url: string, options?: HeaderOptions): Promise<Either<RequestHttpsGetError, ResponseHttp<T>>> {
+  async get <T = any>(url: string, options?: RequestOptions): Promise<Either<RequestHttpsGetError, ResponseHttp<T>>> {
     const pathXml = join(__dirname, '..', '..', 'data', 'mock', 'xml', 'users.xml')
     const userXml = await readFile(pathXml)
 
@@ -22,7 +22,7 @@ export class RequesHttpstFake implements RequestHttpsRepository {
     })
   }
 
-  async post <T = any>(url: string, body: any, options?: HeaderOptions):
+  async post <T = any>(url: string, body: any, options?: RequestOptions):
   Promise<Either<RequestHttpsPostError, ResponseHttp<T>>> {
     return right({
       data: '' as T,
@@ -31,7 +31,7 @@ export class RequesHttpstFake implements RequestHttpsRepository {
     })
   }
 
-  async put <T = any>(url: string, body: any, options?: HeaderOptions): Promise<Either<RequestHttpsPutError, ResponseHttp<T>>> {
+  async put <T = any>(url: string, body: any, options?: RequestOptions): Promise<Either<RequestHttpsPutError, ResponseHttp<T>>> {
     return right({
       data: '' as T,
       statusCode: 201,
@@ -39,7 +39,7 @@ export class RequesHttpstFake implements RequestHttpsRepository {
     })
   }
 
-  async del <T = any>(url: string, options?: HeaderOptions): Promise<Either<RequestHttpsDelError, ResponseHttp<T>>> {
+  async del <T = any>(url: string, options?: RequestOptions): Promise<Either<RequestHttpsDelError, ResponseHttp<T>>> {
     return right({
       data: '' as T,
       statusCode: 201,
