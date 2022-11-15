@@ -45,7 +45,6 @@ describe('# XML UseCase', () => {
 
     // const users = await xmlUseCase.getUsers(usersParams)
     const userAddress = await xmlUseCase.getAddress(`${url}/1/address`)
-    console.log(userAddress)
   })
 
   test('Success to get contact from user id 1', async () => {

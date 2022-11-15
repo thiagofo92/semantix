@@ -32,7 +32,7 @@ interface UserAddressXmlEntity {
     state: [string]
     zipcode: [string]
     country: [string]
-    number: { '_': string, '$': { type: string } }
+    number: [{ '_': string, '$': { type: string } }]
     countryCode: [string]
   }>
 }

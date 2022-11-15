@@ -51,11 +51,17 @@ export class XmlUseCase implements XmlDataUsersUseCaseContract {
     const json = await this.xmlToJsonService.execute<DataUsersAddressXmlEntity>(result.value.data)
 
     if (json.isLeft()) throw json.value
-    console.log(json.value.data)
 
     return json.value.data.item.map(item => ({
-      ...item,
-      number: item.number['_']
+      id: item.id[0],
+      userId: item.userId[0],
+      street: item.street[0],
+      city: item.city[0],
+      state: item.state[0],
+      zipcode: item.zipcode[0],
+      country: item.country[0],
+      number: item.number[0]['_'],
+      countryCode: item.countryCode[0]
     }))
   }
 
@@ -74,7 +80,11 @@ export class XmlUseCase implements XmlDataUsersUseCaseContract {
     if (json.isLeft()) throw json.value
 
     return json.value.data.item.map(item => ({
-      ...item
+      id: item.id[0],
+      userId: item.userId[0],
+      name: item.name[0],
+      phoneNumber: item.phoneNumber[0],
+      email: item.email[0]
     }))
   }
 }
