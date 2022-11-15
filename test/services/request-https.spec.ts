@@ -10,7 +10,7 @@ describe('# Request HTTPS - API linkapi-desafio-tech', () => {
     const requestHttps = new RequestHttps()
     const baseUrl = process.env.API_TECH_BASEURL || ''
     const user = process.env.API_TECH_USER || ''
-    const password = process.env.API_TECH_PASSOWRD || ''
+    const password = process.env.API_TECH_PASSWORD || ''
 
     const authorization = Buffer.from(`${user}:${password}`).toString('base64')
     const options = {
