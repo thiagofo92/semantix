@@ -4,11 +4,26 @@ const { Schema, model } = mongoose
 
 const users = new Schema({
   id: Schema.Types.ObjectId,
-  fullName: String,
-  email: String,
-  address: String,
-  addressNumber: String,
-  phoneNumber: String
+  fullName: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  address: {
+    type: String,
+    required: true
+  },
+  addressNumber: {
+    type: String,
+    required: true
+  },
+  phoneNumber: {
+    type: String,
+    required: true
+  }
 })
 
-export const UsersModel = model('users', users)
+export const PersonModel = model('users', users)
