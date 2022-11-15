@@ -1,4 +1,4 @@
-import { UsersRequestParams, XmlDataUsersUseCaseContract } from '@/core/contract/xml-contract'
+import { UsersRequestParams, DataUseCaseContract } from '@/core/contract/data-contract'
 import {
   DataUsersAddressXmlEntity,
   DataUsersContactXmlEntity,
@@ -8,7 +8,7 @@ import { PersonAddressModel, PersonContactModel, PersonModel } from '../models/p
 import { RequestHttpsRepository } from '../repositories/request-https-repository'
 import { XmlToJsonRepository } from '../repositories/xml-to-json-repository'
 
-export class XmlUseCase implements XmlDataUsersUseCaseContract {
+export class XmlUseCase implements DataUseCaseContract {
   private readonly authorization: string
   constructor (
     private readonly requestHttpService: RequestHttpsRepository,
