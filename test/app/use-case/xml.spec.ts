@@ -8,7 +8,7 @@ import {
 // import { RequesHttpstFake } from '@test/services/mock/RequestHttpsFake'
 import { XmlUseCase } from '@/app/use-case/xml-use-case'
 import { XmlToJsonService } from '@/infra/services/convert/xml-to-json'
-import { UsersRequestParams } from '@/core/contract/xml-contract'
+import { UsersRequestParams } from '@/core/contract/data-contract'
 import { RequestHttps } from '@/infra/services/http/request-https'
 
 describe('# XML UseCase', () => {
