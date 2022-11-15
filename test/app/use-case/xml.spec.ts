@@ -4,7 +4,7 @@ import {
   userAddressFirstIdMock,
   userContactFirstIdMock,
   userFirstIdMock
-} from '@test/data/mock/person/user-first-id-mock'
+} from '@test/data/mock/model/user-first-id-mock'
 // import { RequesHttpstFake } from '@test/services/mock/RequestHttpsFake'
 import { XmlUseCase } from '@/app/use-case/xml-use-case'
 import { XmlToJsonService } from '@/infra/services/convert/xml-to-json'

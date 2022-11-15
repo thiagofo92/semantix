@@ -1,4 +1,9 @@
-import { PersonAddressModel, PersonContactModel, PersonModel, PersonWithAddressAndContactModel } from '@/app/models/person-model'
+import {
+  PersonAddressModel,
+  PersonContactModel,
+  PersonModel,
+  PersonWithAddressAndContactModel
+} from '@/app/models/person-model'
 
 export function userFirstIdWithAddressAndContactMock (): PersonWithAddressAndContactModel {
   return {
