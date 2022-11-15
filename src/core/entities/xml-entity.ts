@@ -1,12 +1,14 @@
 interface XmlFile<T> {
-  data: { [key in keyof T]: T[key] }
+  data: {
+    [key in keyof T]: T[key]
+  }
 }
 
 interface XmlPagination {
   pagination: { page: { _: '1', '$': Object[] }, limit: { _: string, '$': Object[] } }
 }
 
-interface XmlUsers {
+interface UsersXmlEntity {
   usersList: {
     '$': { type: string }
     item: Array<{
@@ -20,4 +22,30 @@ interface XmlUsers {
   }
 }
 
-export type DataUsersXmlEntity = XmlFile<XmlPagination & XmlUsers>
+interface UserAddressXmlEntity {
+  item: Array<{
+    id: string
+    userId: string
+    street: string
+    city: string
+    state: string
+    zipcode: string
+    country: string
+    number: string
+    countryCode: string
+  }>
+}
+
+interface UsersContactXmlEntity {
+  item: Array<{
+    id: string
+    userId: string
+    name: string
+    phoneNumber: string
+    email: string
+  }>
+}
+
+export type DataUsersXmlEntity = XmlFile<XmlPagination & UsersXmlEntity>
+export type DataUsersAddressXmlEntity = XmlFile<UserAddressXmlEntity>
+export type DataUsersContactXmlEntity = XmlFile<UsersContactXmlEntity>
