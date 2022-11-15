@@ -1,18 +1,39 @@
 import { PersonEntity } from '@/core/entities/person-entity'
-import { PersonService } from '@/infra/services/db/memory'
 import { PersonWithAddressAndContactModel } from '@/app/models/person-model'
 import { PersonContract } from '@/core/contract/person-contract'
+import { PersonRepository } from '../repositories'
+import { PersonPresenterModel } from '../presenters/model'
+import { PersonPresenter } from '../presenters/person-presenter'
 
 export class PersonUseCase implements PersonContract {
-  constructor (private readonly personService: PersonService) {}
+  constructor (private readonly personService: PersonRepository) {}
 
-  async create (person: PersonWithAddressAndContactModel): Promise<boolean> {
+  async createOne (person: PersonWithAddressAndContactModel): Promise<boolean> {
     const personEntity = this.toPersonEntity(person)
     const result = await this.personService.createOne(personEntity)
 
     if (result.isLeft()) return false
 
     return true
+  }
+
+  async createMany (person: PersonWithAddressAndContactModel[]): Promise<boolean> {
+    const personEntity = this.toPersonEntityArray(person)
+    const result = await this.personService.createMany(personEntity)
+
+    if (result.isLeft()) return false
+
+    return true
+  }
+
+  async findAll (): Promise<PersonPresenterModel[]> {
+    const result = await this.personService.findAll()
+
+    if (result.isLeft()) throw result.value
+    const personPresenterModel = result.value.map(item => {
+      return PersonPresenter.toPresenter(item)
+    })
+    return personPresenterModel
   }
 
   private toPersonEntity (person: PersonWithAddressAndContactModel): PersonEntity {
