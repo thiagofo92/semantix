@@ -5,4 +5,9 @@ export class PersonCreateError extends Error {
   }
 }
 
-export 
+export class PersonFindAllError extends Error {
+  constructor (message: string) {
+    super(message)
+    this.name = 'PersonFindAllError'
+  }
+}
