@@ -1,10 +1,10 @@
 import { describe, vi, expect, test } from 'vitest'
-import { faker } from '@faker-js/faker'
 import { PersonService } from '@/infra/services/db/memory'
 import { PersonUseCase } from '@/app/use-case'
 import { PersonCreateError } from '@/app/errors/person-error'
 import { left } from '@/shared/error/Either'
 import { PersonWithAddressAndContactModel } from '@/app/models/person-model'
+import { userFirstIdWithAddressAndContactMock } from '@test/data/mock/model'
 
 interface Factory {
   sut: PersonUseCase
@@ -13,32 +13,7 @@ interface Factory {
 }
 
 function factoryPerson (): Factory {
-  const personFake: PersonWithAddressAndContactModel = {
-    id: faker.datatype.number({ min: 1, max: 1 }).toString(),
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    email: faker.internet.email(),
-    avatar: faker.internet.avatar(),
-    contact: [{
-      id: faker.datatype.number({ min: 1, max: 10 }).toString(),
-      email: faker.internet.email(),
-      name: faker.name.firstName(),
-      phoneNumber: faker.phone.number(),
-      userId: faker.datatype.number({ min: 1, max: 1 }).toString()
-    }],
-    address: [{
-      id: faker.datatype.number({ min: 1, max: 10 }).toString(),
-      userId: faker.datatype.number({ min: 1, max: 1 }).toString(),
-      street: faker.address.street(),
-      city: faker.address.city(),
-      state: faker.address.state(),
-      zipcode: faker.address.zipCode(),
-      country: faker.address.country(),
-      number: faker.address.buildingNumber(),
-      countryCode: faker.address.countryCode()
-    }],
-    createdAt: ''
-  }
+  const personFake: PersonWithAddressAndContactModel = userFirstIdWithAddressAndContactMock()
 
   const personServiceMock = new PersonService()
   const sut = new PersonUseCase(personServiceMock)
