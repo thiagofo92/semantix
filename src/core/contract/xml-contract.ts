@@ -9,14 +9,14 @@ export interface Login {
   password: string
 }
 
-export interface Users {
+export interface UsersRequestParams {
   url: string
-  pagination: string
+  page: string
   limit: string
 }
 
 export interface XmlDataUsersUseCaseContract {
-  getUsers: (user: Users) => Promise<PersonModel[]>
+  getUsers: (user: UsersRequestParams) => Promise<PersonModel[]>
   getAddress: (url: string) => Promise<PersonAddressModel[]>
   getContact: (url: string) => Promise<PersonContactModel[]>
 }
