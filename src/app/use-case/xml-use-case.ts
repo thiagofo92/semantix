@@ -1,5 +1,9 @@
 import { Users, XmlDataUsersUseCaseContract } from '@/core/contract/xml-contract'
-import { DataUsersAddressXmlEntity, DataUsersContactXmlEntity } from '@/core/entities/xml-entity'
+import {
+  DataUsersAddressXmlEntity,
+  DataUsersContactXmlEntity,
+  DataUsersXmlEntity
+} from '@/core/entities/xml-entity'
 import { PersonAddressModel, PersonContactModel, PersonModel } from '../models/person-model'
 import { RequestHttpsRepository } from '../repositories/request-https-repository'
 import { XmlToJsonRepository } from '../repositories/xml-to-json-repository'
@@ -30,11 +34,19 @@ export class XmlUseCase implements XmlDataUsersUseCaseContract {
 
     if (result.isLeft()) throw result.value
 
-    const json = await this.xmlToJsonService.execute(result.value.data)
+    const json = await this.xmlToJsonService.execute<DataUsersXmlEntity>(result.value.data)
 
     if (json.isLeft()) throw json.value
 
-    return json.value
+    const users = json.value.data.usersList[0].item.map(user => ({
+      id: user.id[0],
+      firstName: user.firstName[0],
+      lastName: user.lastName[0],
+      email: user.email[0],
+      avatar: user.avatar[0],
+      createdAt: user.createdAt[0]
+    }))
+    return users
   }
 
   async getAddress (url: string): Promise<PersonAddressModel[]> {
