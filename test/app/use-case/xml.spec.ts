@@ -25,6 +25,7 @@ describe('# XML UseCase', () => {
     }
 
     const users = await xmlUseCase.getUsers(usersParams)
+    expect(users).toStrictEqual(expectedUser)
   })
 
   test('Success to get address from user id 1', async () => {
@@ -35,16 +36,11 @@ describe('# XML UseCase', () => {
     const password = process.env.API_TECH_PASSWORD || ''
 
     const xmlUseCase = new XmlUseCase(requestHttps, xmlToJsonService, user, password)
-    const expectedUser = userAddressFirstIdMock()
+    const expectedUserAddress = userAddressFirstIdMock()
     const url = `${process.env.API_TECH_BASEURL || ''}/users`
-    const usersParams: Users = {
-      url,
-      pagination: '1',
-      limit: '1'
-    }
 
-    // const users = await xmlUseCase.getUsers(usersParams)
     const userAddress = await xmlUseCase.getAddress(`${url}/1/address`)
+    expect(userAddress[0]).toStrictEqual(expectedUserAddress)
   })
 
   test('Success to get contact from user id 1', async () => {
@@ -55,11 +51,11 @@ describe('# XML UseCase', () => {
     const password = process.env.API_TECH_PASSWORD || ''
 
     const xmlUseCase = new XmlUseCase(requestHttps, xmlToJsonService, user, password)
-    const expectedUser = userContactFirstIdMock()
+    const expectedUserContact = userContactFirstIdMock()
     const url = `${process.env.API_TECH_BASEURL || ''}/users`
 
     // const users = await xmlUseCase.getUsers(usersParams)
     const userContact = await xmlUseCase.getContact(`${url}/1/contacts`)
-    console.log(userContact)
+    expect(userContact[0]).toStrictEqual(expectedUserContact)
   })
 })
