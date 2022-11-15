@@ -55,7 +55,7 @@ export class PersonUseCase implements PersonContract {
     const personEntity = person.map<PersonEntity>(item => ({
       fullName: `${item.firstName} ${item.lastName}`,
       email: item.email,
-      address: item.address[].street,
+      address: item.address[0].street,
       addressNumber: item.address[0].number,
       phoneNumber: item.contact[0].phoneNumber
     }))
