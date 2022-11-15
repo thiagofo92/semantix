@@ -1,6 +1,6 @@
-import { PersonAddressModel, PersonContactModel, PersonWithAddressAndContactModel } from '@/app/models/person-model'
+import { PersonAddressModel, PersonContactModel, PersonModel, PersonWithAddressAndContactModel } from '@/app/models/person-model'
 
-export function userFirstIdMock (): PersonWithAddressAndContactModel {
+export function userFirstIdWithAddressAndContactMock (): PersonWithAddressAndContactModel {
   return {
     id: '1',
     firstName: 'Nakia',
@@ -9,6 +9,17 @@ export function userFirstIdMock (): PersonWithAddressAndContactModel {
     avatar: 'https://cdn.fakercloud.com/avatars/al_li_128.jpg',
     contact: [userContactFirstIdMock()],
     address: [userAddressFirstIdMock()],
+    createdAt: '2022-02-23T05:20:06.524Z'
+  }
+}
+
+export function userFirstIdMock (): PersonModel {
+  return {
+    id: '1',
+    firstName: 'Nakia',
+    lastName: 'Towne',
+    email: 'Melissa.Stamm84@hotmail.com',
+    avatar: 'https://cdn.fakercloud.com/avatars/al_li_128.jpg',
     createdAt: '2022-02-23T05:20:06.524Z'
   }
 }
