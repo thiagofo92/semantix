@@ -8,7 +8,7 @@ import {
 // import { RequesHttpstFake } from '@test/services/mock/RequestHttpsFake'
 import { XmlUseCase } from '@/app/use-case/xml-use-case'
 import { XmlToJsonService } from '@/infra/services/convert/xml-to-json'
-import { Users } from '@/core/contract/xml-contract'
+import { UsersRequestParams } from '@/core/contract/xml-contract'
 import { RequestHttps } from '@/infra/services/http/request-https'
 
 describe('# XML UseCase', () => {
@@ -22,9 +22,9 @@ describe('# XML UseCase', () => {
     const xmlUseCase = new XmlUseCase(requestHttps, xmlToJsonService, user, password)
     const expectedUser = [userFirstIdMock()]
     const url = `${process.env.API_TECH_BASEURL || ''}/users`
-    const usersParams: Users = {
+    const usersParams: UsersRequestParams = {
       url,
-      pagination: '1',
+      page: '1',
       limit: '1'
     }
 
