@@ -13,12 +13,12 @@ describe('#Convert user data XML', () => {
     const response = await httpRequest.get<string>('')
 
     const expectedUser = {
-      avatar: 'https://cdn.fakercloud.com/avatars/al_li_128.jpg',
-      createdAt: '2022-02-23T05:20:06.524Z',
-      email: 'Melissa.Stamm84@hotmail.com',
-      firstName: 'Nakia',
-      id: '1',
-      lastName: 'Towne'
+      avatar: ['https://cdn.fakercloud.com/avatars/al_li_128.jpg'],
+      createdAt: ['2022-02-23T05:20:06.524Z'],
+      email: ['Melissa.Stamm84@hotmail.com'],
+      firstName: ['Nakia'],
+      id: ['1'],
+      lastName: ['Towne']
     }
 
     if (response.isLeft()) {
@@ -35,7 +35,7 @@ describe('#Convert user data XML', () => {
     const { data } = xml.value
     const { usersList } = data
 
-    expect(usersList.item[0]).toMatchObject(expectedUser)
+    expect(usersList[0].item[0]).toMatchObject(expectedUser)
   })
 
   test('Fail to convert file XML to Object', async () => {
@@ -60,12 +60,12 @@ describe('#Convert user data XML', () => {
     })
 
     const expectedUser = {
-      avatar: 'https://cdn.fakercloud.com/avatars/al_li_128.jpg',
-      createdAt: '2022-02-23T05:20:06.524Z',
-      email: 'Melissa.Stamm84@hotmail.com',
-      firstName: 'Nakia',
-      id: '1',
-      lastName: 'Towne'
+      avatar: ['https://cdn.fakercloud.com/avatars/al_li_128.jpg'],
+      createdAt: ['2022-02-23T05:20:06.524Z'],
+      email: ['Melissa.Stamm84@hotmail.com'],
+      firstName: ['Nakia'],
+      id: ['1'],
+      lastName: ['Towne']
     }
 
     if (response.isLeft()) {
@@ -81,6 +81,6 @@ describe('#Convert user data XML', () => {
     const { data } = xml.value
     const { usersList } = data
 
-    expect(usersList.item[0]).toMatchObject(expectedUser)
+    expect(usersList[0].item[0]).toMatchObject(expectedUser)
   })
 })

@@ -1,4 +1,5 @@
 import { Users, XmlDataUsersUseCaseContract } from '@/core/contract/xml-contract'
+import { DataUsersAddressXmlEntity, DataUsersContactXmlEntity } from '@/core/entities/xml-entity'
 import { PersonAddressModel, PersonContactModel, PersonModel } from '../models/person-model'
 import { RequestHttpsRepository } from '../repositories/request-https-repository'
 import { XmlToJsonRepository } from '../repositories/xml-to-json-repository'
@@ -14,7 +15,7 @@ export class XmlUseCase implements XmlDataUsersUseCaseContract {
     this.authorization = Buffer.from(`${user}:${password}`).toString('base64')
   }
 
-  async getUsers (user: Users): Promise<PersonModel> {
+  async getUsers (user: Users): Promise<PersonModel[]> {
     const options = {
       headers: {
         Authorization: `Basic ${this.authorization}`
@@ -36,7 +37,7 @@ export class XmlUseCase implements XmlDataUsersUseCaseContract {
     return json.value
   }
 
-  async getAddress (url: string): Promise<PersonAddressModel> {
+  async getAddress (url: string): Promise<PersonAddressModel[]> {
     const options = {
       headers: {
         Authorization: `Basic ${this.authorization}`
@@ -50,11 +51,15 @@ export class XmlUseCase implements XmlDataUsersUseCaseContract {
     const json = await this.xmlToJsonService.execute<DataUsersAddressXmlEntity>(result.value.data)
 
     if (json.isLeft()) throw json.value
+    console.log(json.value.data)
 
-    return json.value
+    return json.value.data.item.map(item => ({
+      ...item,
+      number: item.number['_']
+    }))
   }
 
-  async getContact (url: string): Promise<PersonContactModel> {
+  async getContact (url: string): Promise<PersonContactModel[]> {
     const options = {
       headers: {
         Authorization: `Basic ${this.authorization}`
@@ -68,6 +73,8 @@ export class XmlUseCase implements XmlDataUsersUseCaseContract {
 
     if (json.isLeft()) throw json.value
 
-    return json.value
+    return json.value.data.item.map(item => ({
+      ...item
+    }))
   }
 }

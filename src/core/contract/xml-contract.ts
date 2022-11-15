@@ -16,7 +16,7 @@ export interface Users {
 }
 
 export interface XmlDataUsersUseCaseContract {
-  getUsers: (user: Users) => Promise<PersonModel>
-  getAddress: (url: string) => Promise<PersonAddressModel>
-  getContact: (url: string) => Promise<PersonContactModel>
+  getUsers: (user: Users) => Promise<PersonModel[]>
+  getAddress: (url: string) => Promise<PersonAddressModel[]>
+  getContact: (url: string) => Promise<PersonContactModel[]>
 }

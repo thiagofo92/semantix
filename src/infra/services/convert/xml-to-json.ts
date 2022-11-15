@@ -6,7 +6,7 @@ import { Parser } from 'xml2js'
 export class XmlToJsonService implements XmlToJsonRepository {
   async execute<T = any>(xml: string): Promise<Either<XmlConvertError, T>> {
     try {
-      const { parseStringPromise } = new Parser({ explicitArray: false, trim: true })
+      const { parseStringPromise } = new Parser({ trim: true })
       const convertedData = await parseStringPromise(xml)
       return right(convertedData)
     } catch (error: any) {

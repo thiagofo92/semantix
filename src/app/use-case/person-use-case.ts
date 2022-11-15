@@ -26,7 +26,7 @@ export class PersonUseCase implements PersonContract {
     const indexContact = this.findFisrtId(person.contact)
     const indexAddress = this.findFisrtId(person.address)
 
-    personEntity.fullName = `${person.firstName} ${person.lastName}`
+    personEntity.fullName = `${person.firstName[0]} ${person.lastName[0]}`
     personEntity.email = person.email
     personEntity.address = person.address[indexAddress].street
     personEntity.addressNumber = person.address[indexAddress].number
