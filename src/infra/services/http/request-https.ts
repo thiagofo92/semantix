@@ -1,7 +1,7 @@
 import Axios from 'axios'
 import {
   RequestHttpsRepository,
-  HeaderOptions,
+  RequestOptions,
   ResponseHttp
 } from '@/app/repositories/request-https-repository'
 import { Either, left, right } from '@/shared/error/Either'
@@ -13,10 +13,11 @@ import {
 } from '@/core/errors/http-request-error'
 
 export class RequestHttps implements RequestHttpsRepository {
-  async get <T = any>(url: string, options?: HeaderOptions): Promise<Either<RequestHttpsGetError, ResponseHttp<T>>> {
+  async get <T = any>(url: string, options?: RequestOptions): Promise<Either<RequestHttpsGetError, ResponseHttp<T>>> {
     try {
       const result = await Axios.get(url, {
-        headers: { ...options?.headers }
+        headers: { ...options?.headers },
+        params: options?.params
       })
 
       const response: ResponseHttp<T> = {
@@ -30,7 +31,7 @@ export class RequestHttps implements RequestHttpsRepository {
     }
   }
 
-  async post <T = any>(url: string, body: any, options?: HeaderOptions):
+  async post <T = any>(url: string, body: any, options?: RequestOptions):
   Promise<Either<RequestHttpsPostError, ResponseHttp<T>>> {
     try {
       const result = await Axios.post(url, body, {
@@ -47,7 +48,7 @@ export class RequestHttps implements RequestHttpsRepository {
     }
   }
 
-  async put <T = any>(url: string, body: any, options?: HeaderOptions): Promise<Either<RequestHttpsPutError, ResponseHttp<T>>> {
+  async put <T = any>(url: string, body: any, options?: RequestOptions): Promise<Either<RequestHttpsPutError, ResponseHttp<T>>> {
     try {
       const result = await Axios.put(url, body, {
         headers: { ...options?.headers }
@@ -63,7 +64,7 @@ export class RequestHttps implements RequestHttpsRepository {
     }
   }
 
-  async del <T = any>(url: string, options?: HeaderOptions): Promise<Either<RequestHttpsDelError, ResponseHttp<T>>> {
+  async del <T = any>(url: string, options?: RequestOptions): Promise<Either<RequestHttpsDelError, ResponseHttp<T>>> {
     try {
       const result = await Axios.delete(url, {
         headers: { ...options?.headers }
