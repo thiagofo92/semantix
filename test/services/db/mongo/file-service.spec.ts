@@ -7,7 +7,7 @@ import { FileModel } from '@/infra/services/db/mongo/schema/file-schema'
 import { FileServiceMongo } from '@/infra/services/db/mongo/file-service-mongo'
 import { FileEntity } from '@/core/entities'
 import { faker } from '@faker-js/faker'
-import { FileAlreadyCreateError, FileCreateError, FileFindByNameError } from '@/app/errors/file-error'
+import { FileCreateError, FileFindByNameError } from '@/app/errors/file-error'
 
 const fileMock: FileEntity = {
   idFile: faker.datatype.uuid(),
@@ -42,15 +42,6 @@ describe('# Folder Tes', () => {
     const result = await fileService.create(fileMock)
 
     expect(result.value).toBeInstanceOf(FileCreateError)
-  })
-
-  test('File Already created', async () => {
-    const fileService = new FileServiceMongo()
-
-    await fileService.create(fileMock)
-    const result = await fileService.create(fileMock)
-
-    expect(result.value).instanceOf(FileAlreadyCreateError)
   })
 
   test('Error to find folder by name', async () => {

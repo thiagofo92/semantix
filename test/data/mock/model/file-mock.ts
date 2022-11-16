@@ -4,7 +4,8 @@ import { faker } from '@faker-js/faker'
 export function fileModelMock (): FileUploadModel {
   return {
     token: faker.datatype.uuid(),
-    file: faker.image.image(),
-    name: faker.lorem.words(1)
+    file: Buffer.from(faker.image.city()),
+    fileName: faker.lorem.words(3),
+    folderName: faker.lorem.words(1)
   }
 }

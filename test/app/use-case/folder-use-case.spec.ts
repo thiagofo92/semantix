@@ -53,4 +53,24 @@ describe('# Folder use case', () => {
     const exist = !!folder.data.idFolder
     expect(exist).toStrictEqual(true)
   })
+
+  test('Folder not found', async () => {
+    const { sut } = factoryFolderUseCase()
+    const folderMock = folderModelMock()
+
+    await sut.create(folderMock)
+    const folder = await sut.findByName('123123')
+
+    expect(folder.statusCode).toStrictEqual(404)
+  })
+
+  test('Success to delete folder by name', async () => {
+    const { sut } = factoryFolderUseCase()
+    const folderMock = folderModelMock()
+
+    await sut.create(folderMock)
+    const folder = await sut.del(folderMock.name)
+
+    expect(folder.data).toStrictEqual(true)
+  })
 })
