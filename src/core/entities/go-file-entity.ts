@@ -40,3 +40,9 @@ export interface GoFileCreateEntity {
   token: string
   folderName: string
 }
+
+export interface GoFileUploadEntity {
+  file: string
+  token: string
+  folderId: string
+}
