@@ -5,6 +5,13 @@ import { FolderModel } from '@/infra/services/db/mongo/schema'
 import { describe, vi, test, expect, afterAll, beforeAll, beforeEach } from 'vitest'
 import { left } from '@/shared/error/Either'
 import { FolderCreateError, FolderFindByIdError } from '@/app/errors/folder-error'
+import { FolderEntity } from '@/core/entities'
+import { faker } from '@faker-js/faker'
+
+const folderMock: FolderEntity = {
+  idFolder: faker.datatype.uuid(),
+  name: 'folder-test'
+}
 
 describe('# Folder Tes', () => {
   beforeAll(async () => {
@@ -22,7 +29,7 @@ describe('# Folder Tes', () => {
 
   test('Create folder', async () => {
     const folderService = new FolderServiceMongo()
-    const result = await folderService.create('12345', 'test')
+    const result = await folderService.create(folderMock)
 
     expect(result.value).toStrictEqual(true)
   })
@@ -30,21 +37,21 @@ describe('# Folder Tes', () => {
   test('Fail to create folder', async () => {
     const folderService = new FolderServiceMongo()
     vi.spyOn(folderService, 'create').mockResolvedValueOnce(left(new FolderCreateError('Test fail to create')))
-    const result = await folderService.create('12345', 'test')
+    const result = await folderService.create(folderMock)
 
     expect(result.value).toBeInstanceOf(FolderCreateError)
   })
 
   test('Find folder by name', async () => {
     const folderService = new FolderServiceMongo()
-    const idFolder = '12345'
-    const result = await folderService.create(idFolder, 'test')
-    const folder = await folderService.findById('test')
+
+    const result = await folderService.create(folderMock)
+    const folder = await folderService.findById(folderMock.name)
 
     expect(result.value).toStrictEqual(true)
     if (folder.isLeft()) throw folder.value
 
-    expect(folder.value.idFolder).toStrictEqual(idFolder)
+    expect(folder.value.idFolder).toStrictEqual(folderMock.idFolder)
   })
 
   test('Error to find folder by name', async () => {
