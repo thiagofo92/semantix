@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import { PersonServiceMongo } from '@/infra/services/db/mongo'
 import { personEntityArrayMock, personEntityMock } from '@test/data/mock/entity/person-entity-mock'
-import { describe, test, expect, beforeAll, afterAll, afterEach, vi } from 'vitest'
+import { describe, test, expect, beforeAll, afterAll, vi, beforeEach } from 'vitest'
 import { MongoConnection } from '@/infra/services/db/config/mongo-client'
 import { PersonModel } from '@/infra/services/db/mongo/schema'
 import { left } from '@/shared/error/Either'
@@ -12,7 +12,7 @@ describe('# Create person in database', () => {
     await MongoConnection()
   })
 
-  afterEach(async () => {
+  beforeEach(async () => {
     await PersonModel.deleteMany()
   })
 

@@ -44,6 +44,7 @@ describe('# XML UseCase', () => {
     const url = `${process.env.API_TECH_BASEURL || ''}/users`
 
     const userAddress = await xmlUseCase.getAddress(`${url}/1/address`)
+
     expect(userAddress[0]).toStrictEqual(expectedUserAddress)
   })
 
