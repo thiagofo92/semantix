@@ -10,6 +10,7 @@ interface Factory {
   sut: FileUseCase
   fileServiceMemory: FileServiceMemory
   folderServiceMemory: FolderServiceMemory
+  requestHttps: RequesHttpsGoFileFake
 }
 
 function factoryFileUseCase (): Factory {
@@ -20,7 +21,8 @@ function factoryFileUseCase (): Factory {
   return {
     sut,
     fileServiceMemory,
-    folderServiceMemory
+    folderServiceMemory,
+    requestHttps
   }
 }
 
@@ -43,10 +45,30 @@ describe('Test file use case', () => {
     expect(result.statusCode).toStrictEqual(204)
   })
 
-  test('Error to create file', async () => {
+  test('Error to create file - Unexpected error find folder by name', async () => {
     const { sut, folderServiceMemory } = factoryFileUseCase()
     const fileModel = fileModelMock()
     vi.spyOn(folderServiceMemory, 'findByName').mockResolvedValueOnce(left(new Error()))
+    const result = await sut.create(fileModel)
+
+    expect(result.statusCode).toStrictEqual(500)
+  })
+
+  test('Error get server store', async () => {
+    const { sut, folderServiceMemory, requestHttps } = factoryFileUseCase()
+    const fileModel = fileModelMock()
+    vi.spyOn(folderServiceMemory, 'findByName').mockResolvedValueOnce(right({ idFolder: '12345' }))
+    vi.spyOn(requestHttps, 'get').mockResolvedValueOnce(left(new Error()))
+    const result = await sut.create(fileModel)
+
+    expect(result.statusCode).toStrictEqual(500)
+  })
+
+  test('Error to upload file', async () => {
+    const { sut, folderServiceMemory, requestHttps } = factoryFileUseCase()
+    const fileModel = fileModelMock()
+    vi.spyOn(folderServiceMemory, 'findByName').mockResolvedValueOnce(right({ idFolder: '12345' }))
+    vi.spyOn(requestHttps, 'post').mockResolvedValueOnce(left(new Error()))
     const result = await sut.create(fileModel)
 
     expect(result.statusCode).toStrictEqual(500)
