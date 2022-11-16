@@ -1,0 +1,473 @@
+{
+	"info": {
+		"_postman_id": "93eb8b95-2813-4b1d-b08f-19887bffa910",
+		"name": "Semantix",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10132893"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "all",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "741d5db9-c596-41b4-8785-1d50367224c8",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "17b271f2-2c76-4240-a0d7-46f57e919ca3",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{semantix}}/users?limit=1&page=100",
+							"host": [
+								"{{semantix}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "1"
+								},
+								{
+									"key": "page",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "address",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "741d5db9-c596-41b4-8785-1d50367224c8",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "17b271f2-2c76-4240-a0d7-46f57e919ca3",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{semantix}}/users/56/address",
+							"host": [
+								"{{semantix}}"
+							],
+							"path": [
+								"users",
+								"56",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "contact",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "741d5db9-c596-41b4-8785-1d50367224c8",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "17b271f2-2c76-4240-a0d7-46f57e919ca3",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{semantix}}/users/8/contacts",
+							"host": [
+								"{{semantix}}"
+							],
+							"path": [
+								"users",
+								"8",
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "go-file",
+			"item": [
+				{
+					"name": "folder",
+					"item": [
+						{
+							"name": "create",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "parentFolderId",
+											"value": "fe385996-4128-4029-9c09-de7cbe55485a",
+											"type": "text"
+										},
+										{
+											"key": "token",
+											"value": "c0i87XrhUkIWjb2VXT7UOj4wGIyYTFiq",
+											"type": "text"
+										},
+										{
+											"key": "folderName",
+											"value": "test-postman",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{go-file}}/createFolder",
+									"host": [
+										"{{go-file}}"
+									],
+									"path": [
+										"createFolder"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "text"
+										},
+										{
+											"key": "contentsId",
+											"value": "601eed66-229f-4112-8107-917c5e7f5500",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{go-file}}/deleteContent",
+									"host": [
+										"{{go-file}}"
+									],
+									"path": [
+										"deleteContent"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "server",
+					"item": [
+						{
+							"name": "satus",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{go-file}}/getServer",
+									"host": [
+										"{{go-file}}"
+									],
+									"path": [
+										"getServer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "requiest-content",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{go-file}}/getContent?token=c0i87XrhUkIWjb2VXT7UOj4wGIyYTFiq",
+									"host": [
+										"{{go-file}}"
+									],
+									"path": [
+										"getContent"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "c0i87XrhUkIWjb2VXT7UOj4wGIyYTFiq"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "account-details",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {},
+								"strictSSL": true,
+								"followRedirects": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{go-file}}/getAccountDetails?token={{token}}&allDetails=true",
+									"host": [
+										"{{go-file}}"
+									],
+									"path": [
+										"getAccountDetails"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}"
+										},
+										{
+											"key": "allDetails",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "upload",
+					"item": [
+						{
+							"name": "file",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "text"
+										},
+										{
+											"key": "folderId",
+											"value": "5b7bc390-b73d-4432-9024-7daacd053e85",
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/thiag/Desktop/Blue Illustrated Technology General LinkedIn Banner.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://store10{{go-file-upload}}",
+									"protocol": "https",
+									"host": [
+										"store10{{go-file-upload}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "create-folder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"test-postman\",\r\n    \"parentFolderId\": \"fe385996-4128-4029-9c09-de7cbe55485a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "192.168.1.10:4500/api/folder/create",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"10"
+							],
+							"port": "4500",
+							"path": [
+								"api",
+								"folder",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-file",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/thiag/Desktop/Blue Illustrated Technology General LinkedIn Banner.png"
+								},
+								{
+									"key": "folderName",
+									"value": "test-postman",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "192.168.1.10:4500/api/file/create",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"10"
+							],
+							"port": "4500",
+							"path": [
+								"api",
+								"file",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-file",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "192.168.1.10:4500/api/file/delete?fileName=Blue Illustrated Technology General LinkedIn Banner.png",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"10"
+							],
+							"port": "4500",
+							"path": [
+								"api",
+								"file",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "fileName",
+									"value": "Blue Illustrated Technology General LinkedIn Banner.png"
+								},
+								{
+									"key": "folderName",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-folder",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "192.168.1.10:4500/api/folder/delete?folderName=test-postman",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"10"
+							],
+							"port": "4500",
+							"path": [
+								"api",
+								"folder",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "folderName",
+									"value": "test-postman"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
