@@ -26,5 +26,5 @@ export interface RequestHttpsRepository {
   get: <T = any>(url: string, options?: RequestOptions) => Promise<Either<RequestHttpsGetError, ResponseHttp<T>>>
   post: <T = any> (url: string, body: any, options?: RequestOptions) => Promise<Either<RequestHttpsPostError, ResponseHttp<T>>>
   put: <T = any> (url: string, body: any, options?: RequestOptions) => Promise<Either<RequestHttpsPutError, ResponseHttp<T>>>
-  del: <T = any> (url: string, options?: RequestOptions) => Promise<Either<RequestHttpsDelError, ResponseHttp<T>>>
+  del: <T = any> (url: string, body: any, options?: RequestOptions) => Promise<Either<RequestHttpsDelError, ResponseHttp<T>>>
 }
