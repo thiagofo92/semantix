@@ -1,5 +1,5 @@
 export interface FileUploadModel {
   name: string
-  file: string
+  file: Buffer
   token: string
 }
