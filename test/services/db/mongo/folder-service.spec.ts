@@ -46,7 +46,7 @@ describe('# Folder Tes', () => {
     const folderService = new FolderServiceMongo()
 
     const result = await folderService.create(folderMock)
-    const folder = await folderService.findById(folderMock.name)
+    const folder = await folderService.findByName(folderMock.name)
 
     expect(result.value).toStrictEqual(true)
     if (folder.isLeft()) throw folder.value
@@ -56,15 +56,15 @@ describe('# Folder Tes', () => {
 
   test('Error to find folder by name', async () => {
     const folderService = new FolderServiceMongo()
-    vi.spyOn(folderService, 'findById').mockResolvedValueOnce(left(new FolderFindByIdError('Test fail to create')))
-    const folder = await folderService.findById('test')
+    vi.spyOn(folderService, 'findByName').mockResolvedValueOnce(left(new FolderFindByIdError('Test fail to create')))
+    const folder = await folderService.findByName('test')
 
     expect(folder.value).toBeInstanceOf(FolderFindByIdError)
   })
 
   test('Folder not found', async () => {
     const folderService = new FolderServiceMongo()
-    const folder = await folderService.findById('test')
+    const folder = await folderService.findByName('test')
 
     if (folder.isLeft()) throw folder.value
 
