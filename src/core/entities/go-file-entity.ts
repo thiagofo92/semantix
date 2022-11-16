@@ -42,7 +42,7 @@ export interface GoFileCreateEntity {
 }
 
 export interface GoFileUploadEntity {
-  file: string
+  file: Buffer
   token: string
   folderId: string
 }
