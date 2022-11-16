@@ -14,7 +14,7 @@ export class FolderServiceMemory implements FolderRepository {
     }
   }
 
-  async findById (name: string): Promise<Either<FolderFindByIdError, { idFolder: string }>> {
+  async findByName (name: string): Promise<Either<FolderFindByIdError, { idFolder: string }>> {
     try {
       const result = this.folder.find(item => item.name === name)
 
