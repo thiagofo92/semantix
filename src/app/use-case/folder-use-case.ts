@@ -2,7 +2,8 @@ import { FolderUseCaseContract } from '@/core/contract'
 import { FolderEntity } from '@/core/entities'
 import { GoFileCreateEntity, GoFileResponseCreateFolderEntity } from '@/core/entities/go-file-entity'
 import qs from 'qs'
-import { badRequest, internalError, success, successToCreate } from '../helpers/response-helpers'
+import { GO_FILE_TOKEN } from '../controllers/token'
+import { badRequest, internalError, notFound, success, successToCreate } from '../helpers/response-helpers'
 import { FolderModel } from '../models'
 import { ResponseModel } from '../presenters/model/response-model'
 import { RequestHttpsRepository } from '../repositories'
@@ -17,7 +18,7 @@ export class FolderUseCase implements FolderUseCaseContract {
 
   async create (folderModel: FolderModel): Promise<ResponseModel> {
     if (!folderModel.parentFolderId || !folderModel.name) {
-      return badRequest(`Bad Request IdFolder: ${folderModel.parentFolderId} Name: ${folderModel.name}`)
+      return badRequest(`Bad Request parentFolderId: ${folderModel.parentFolderId} Name: ${folderModel.name}`)
     }
     const gofileCreate: GoFileCreateEntity = {
       token: folderModel.token,
@@ -55,6 +56,33 @@ export class FolderUseCase implements FolderUseCaseContract {
 
     if (result.isLeft()) return internalError(`Message: ${result.value.message}`)
 
+    if (!result.value) return notFound('Folder not found')
+
     return success(result.value)
+  }
+
+  async del (name: string): Promise<ResponseModel> {
+    const folder = await this.folderService.findByName(name)
+
+    if (!name) return badRequest(`Bad request, use a valid name`)
+
+    if (folder.isLeft()) return internalError(`Message: ${folder.value.message}`)
+
+    const deleteFile = {
+      token: GO_FILE_TOKEN,
+      contentsId: folder.value?.idFolder
+    }
+
+    const data = qs.stringify(deleteFile)
+    const options = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }
+    const response = await this.requestHttps.del(goFile.urlDeleteContent, data, options)
+
+    if (response.isLeft()) return internalError(response.value)
+
+    return success(true)
   }
 }
