@@ -11,3 +11,10 @@ export class FolderFindByIdError extends Error {
     this.name = 'FolderFindByIdError'
   }
 }
+
+export class FolderNotFoundError extends Error {
+  constructor (message: string) {
+    super(message)
+    this.name = 'FolderNotFoundError'
+  }
+}
