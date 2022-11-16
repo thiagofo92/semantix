@@ -26,6 +26,7 @@
   },
   "scripts": {
     "dev:script": "tsnd --ignore-watch node_modules --transpile-only -r tsconfig-paths/register src/main/cron/schedule.ts",
+    "dev:server": "tsnd --ignore-watch node_modules --transpile-only -r tsconfig-paths/register src/main/server/express-server.ts",
     "test": "vitest",
     "test:one": "vitest xml-to-json.spec.ts",
     "test:cov": "vitest run --coverage",
