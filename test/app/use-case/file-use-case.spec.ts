@@ -35,13 +35,22 @@ describe('Test file use case', () => {
     expect(result.data).toStrictEqual(true)
   })
 
+  test('Success to delete file', async () => {
+    const { sut, folderServiceMemory } = factoryFileUseCase()
+    const fileModel = fileModelMock()
+    vi.spyOn(folderServiceMemory, 'findByName').mockResolvedValueOnce(right({ idFolder: '12345' }))
+    const result = await sut.del(fileModel.fileName)
+
+    expect(result.data).toStrictEqual(true)
+  })
+
   test('Folder not found', async () => {
     const { sut, folderServiceMemory } = factoryFileUseCase()
     const fileModel = fileModelMock()
     vi.spyOn(folderServiceMemory, 'findByName').mockResolvedValueOnce(right(null))
     const result = await sut.create(fileModel)
 
-    expect(result.statusCode).toStrictEqual(204)
+    expect(result.statusCode).toStrictEqual(404)
   })
 
   test('Error to create file - Unexpected error find folder by name', async () => {
