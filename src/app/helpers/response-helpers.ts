@@ -14,7 +14,7 @@ export function successToCreate (data: any): ResponseModel {
   }
 }
 
-export function notFound (data: any): ResponseModel {
+export function notContent (data: any): ResponseModel {
   return {
     statusCode: 204,
     data
@@ -31,6 +31,13 @@ export function badRequest (data: any): ResponseModel {
 export function notAuthorized (data: any): ResponseModel {
   return {
     statusCode: 401,
+    data
+  }
+}
+
+export function notFound (data: any): ResponseModel {
+  return {
+    statusCode: 404,
     data
   }
 }
