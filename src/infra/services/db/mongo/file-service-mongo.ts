@@ -7,10 +7,6 @@ import { FileModel } from './schema/file-schema'
 export class FileServiceMongo implements FileRepository {
   async create (file: FileEntity): Promise<Either<FileCreateError | FileAlreadyCreateError, boolean>> {
     try {
-      const exist = await FileModel.exists({ name: file.name })
-
-      if (exist) return left(new FileAlreadyCreateError(file.name))
-
       await FileModel.create({
         id_file: file.idFile,
         id_folder: file.idFolder,
@@ -23,7 +19,7 @@ export class FileServiceMongo implements FileRepository {
     }
   }
 
-  async findByName (name: string): Promise<Either<FileFindByNameError, any>> {
+  async findByName (name: string): Promise<Either<FileFindByNameError, FileEntity | null>> {
     try {
       const file = await FileModel.findOne({
         name
@@ -32,6 +28,7 @@ export class FileServiceMongo implements FileRepository {
 
       return right({
         id: file._id.toString(),
+        idFile: file.id_file || '',
         idFolder: file.id_folder,
         name: file.name
       })
