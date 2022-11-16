@@ -1,14 +1,15 @@
 import { FolderCreateError, FolderFindByIdError } from '@/app/errors/folder-error'
 import { FolderRepository } from '@/app/repositories/folder-repository'
+import { FolderEntity } from '@/core/entities'
 import { Either, left, right } from '@/shared/error/Either'
 import { FolderModel } from './schema'
 
 export class FolderServiceMongo implements FolderRepository {
-  async create (idFolder: string, name: string): Promise<Either<FolderCreateError, boolean>> {
+  async create (folder: FolderEntity): Promise<Either<FolderCreateError, boolean>> {
     try {
       await FolderModel.create({
-        id_folder: idFolder,
-        name
+        id_folder: folder.idFolder,
+        name: folder.name
       })
       return right(true)
     } catch (error: any) {
