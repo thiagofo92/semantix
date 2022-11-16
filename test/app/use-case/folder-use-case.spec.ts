@@ -4,7 +4,7 @@ import { FolderUseCase } from '@/app/use-case'
 import { folderModelMock } from '@test/data/mock/model/folder-mock'
 import { FolderCreateError } from '@/app/errors/folder-error'
 import { left } from '@/shared/error/Either'
-import { RequesHttpsGoFIleFake } from '@test/services/mock/request-https-gofile-fake'
+import { RequesHttpsGoFileFake } from '@test/services/mock/request-https-gofile-fake'
 
 interface Factory {
   sut: FolderUseCase
@@ -13,7 +13,7 @@ interface Factory {
 
 function factoryFolderUseCase (): Factory {
   const folderServiceMemory = new FolderServiceMemory()
-  const requestHttps = new RequesHttpsGoFIleFake()
+  const requestHttps = new RequesHttpsGoFileFake()
   const sut = new FolderUseCase(folderServiceMemory, requestHttps)
   return {
     sut,
