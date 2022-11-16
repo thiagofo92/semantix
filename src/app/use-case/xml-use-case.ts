@@ -52,53 +52,74 @@ export class XmlUseCase implements DataUseCaseContract {
   }
 
   async getAddress (url: string): Promise<PersonAddressModel[]> {
-    const options = {
-      headers: {
-        Authorization: `Basic ${this.authorization}`
+    try {
+      const options = {
+        headers: {
+          Authorization: `Basic ${this.authorization}`
+        }
       }
+
+      const result = await this.requestHttpService.get(url, options)
+
+      if (result.isLeft()) {
+        console.log(url)
+
+        throw result.value
+      }
+
+      const json = await this.xmlToJsonService.execute<DataUsersAddressXmlEntity>(result.value.data)
+
+      if (json.isLeft()) throw json.value
+
+      if (!json.value.data.item || json.value.data.item.length <= 0) return []
+      return json.value.data.item.map(item => ({
+        id: item.id[0],
+        userId: item.userId[0],
+        street: item.street[0],
+        city: item.city[0],
+        state: item.state[0],
+        zipcode: item.zipcode[0],
+        country: item.country[0],
+        number: item.number[0]['_'],
+        countryCode: item.countryCode[0]
+      }))
+    } catch (error) {
+      console.log(error)
+      return []
     }
-
-    const result = await this.requestHttpService.get(url, options)
-
-    if (result.isLeft()) throw result.value
-
-    const json = await this.xmlToJsonService.execute<DataUsersAddressXmlEntity>(result.value.data)
-
-    if (json.isLeft()) throw json.value
-
-    return json.value.data.item.map(item => ({
-      id: item.id[0],
-      userId: item.userId[0],
-      street: item.street[0],
-      city: item.city[0],
-      state: item.state[0],
-      zipcode: item.zipcode[0],
-      country: item.country[0],
-      number: item.number[0]['_'],
-      countryCode: item.countryCode[0]
-    }))
   }
 
   async getContact (url: string): Promise<PersonContactModel[]> {
-    const options = {
-      headers: {
-        Authorization: `Basic ${this.authorization}`
+    try {
+      const options = {
+        headers: {
+          Authorization: `Basic ${this.authorization}`
+        }
       }
+      const result = await this.requestHttpService.get(url, options)
+
+      if (result.isLeft()) {
+        console.log(url)
+
+        throw result.value
+      }
+
+      const json = await this.xmlToJsonService.execute<DataUsersContactXmlEntity>(result.value.data)
+
+      if (json.isLeft()) throw json.value
+
+      if (!json.value.data.item || json.value?.data?.item?.length <= 0) return []
+
+      return json.value.data.item.map(item => ({
+        id: item.id[0],
+        userId: item.userId[0],
+        name: item.name[0],
+        phoneNumber: item.phoneNumber[0],
+        email: item.email[0]
+      }))
+    } catch (error) {
+      console.log(error)
+      return []
     }
-    const result = await this.requestHttpService.get(url, options)
-
-    if (result.isLeft()) throw result.value
-
-    const json = await this.xmlToJsonService.execute<DataUsersContactXmlEntity>(result.value.data)
-
-    if (json.isLeft()) throw json.value
-
-    return json.value.data.item.map(item => ({
-      id: item.id[0],
-      userId: item.userId[0],
-      name: item.name[0],
-      phoneNumber: item.phoneNumber[0],
-      email: item.email[0]
-    }))
   }
 }
