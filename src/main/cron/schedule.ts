@@ -2,52 +2,72 @@ import 'dotenv/config'
 import { XmlUseCase } from '@/app/use-case/xml-use-case'
 import { PersonUseCase } from '@/app/use-case'
 import { XmlToJsonService } from '@/infra/services/convert/xml-to-json'
-import { PersonService } from '@/infra/services/db/memory'
 import { RequestHttps } from '@/infra/services/http/request-https'
-import { PersonAddressModel, PersonContactModel, PersonModel } from '@/app/models/person-model'
-import { SEC } from '../util/time-milise'
+import {
+  PersonAddressModel,
+  PersonContactModel,
+  PersonModel,
+  PersonWithAddressAndContactModel
+} from '@/app/models/person-model'
+import { MIN } from '../util/time-milise'
 import { MongoConnection } from '@/infra/services/db/config/mongo-client'
+import { PersonServiceMongo } from '@/infra/services/db/mongo'
 
 void (async () => {
   const requestHttps = new RequestHttps()
   const xmlServices = new XmlToJsonService()
-  const personService = new PersonService()
+  const personService = new PersonServiceMongo()
   const personUseCase = new PersonUseCase(personService)
 
-  const delay = SEC * 3
+  const delay = MIN * 1
   const user = process.env.API_TECH_USER || ''
   const password = process.env.API_TECH_PASSWORD || ''
   const xmlUseCase = new XmlUseCase(requestHttps, xmlServices, user, password)
   const baseUrl = process.env.API_TECH_BASEURL || ''
   const url = `${baseUrl}/users`
-  // const personModel: PersonWithAddressAndContactModel[] = []
+  const personModel: PersonWithAddressAndContactModel[] = []
   const usersAddress: PersonAddressModel [] = []
   const usersContact: PersonContactModel [] = []
-  const count = 1
+
   const users: PersonModel[] = []
+  let page = 1
+  let count = 0
 
   const MongoClient = await MongoConnection()
-
   while (true) {
-    const tmp = await xmlUseCase.getUsers({ url, limit: '10', page: count.toString() })
+    count += 3
+    const user = await xmlUseCase.getUsers({ url, limit: '1', page: page.toString() })
 
-    if (tmp.length <= 0) break
-    users.push(...tmp)
+    if (user.length <= 0) break
+
+    usersAddress.push(...await xmlUseCase.getAddress(`${url}/${user[0].id}/address`))
+
+    usersContact.push(...await xmlUseCase.getContact(`${url}/${user[0].id}/contacts`))
+
+    users.push(...user)
+    if (count >= 29) {
+      await sleep(delay)
+      count = 0
+    }
+    page += 1
   }
 
-  const { length } = users
+  users.forEach(user => {
+    const address = usersAddress.filter(address => address.userId === user.id)
+    const contact = usersContact.filter(contact => contact.userId === user.id)
+    const person: PersonWithAddressAndContactModel = {
+      ...user,
+      contact: [],
+      address: []
+    }
+    if (address) person.address.push(...address)
 
-  for (let i = 0; i < length; i++) {
-    const { id } = users[i]
-    usersAddress.push(...await xmlUseCase.getAddress(`${url}/${id}/address`))
-    await sleep(delay)
-    usersContact.push(...await xmlUseCase.getContact(`${url}/${id}/contacts`))
-    await sleep(delay)
-  }
+    if (contact) person.contact.push(...contact)
 
-  console.log(users)
-  console.log(usersAddress)
-  console.log(usersContact)
+    personModel.push(person)
+  })
+
+  await personUseCase.createMany(personModel)
 
   await MongoClient.disconnect()
   async function sleep (min: number): Promise<void> {
