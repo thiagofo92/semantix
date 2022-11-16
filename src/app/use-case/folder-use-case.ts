@@ -15,12 +15,12 @@ export class FolderUseCase implements FolderUseCaseContract {
   ) {}
 
   async create (folderModel: FolderModel): Promise<ResponseModel> {
-    if (!folderModel.parentIdFolder || !folderModel.name) {
-      return badRequest(`Bad Request IdFolder: ${folderModel.parentIdFolder} Name: ${folderModel.name}`)
+    if (!folderModel.parentFolderId || !folderModel.name) {
+      return badRequest(`Bad Request IdFolder: ${folderModel.parentFolderId} Name: ${folderModel.name}`)
     }
     const gofileCreate: GoFileCreateEntity = {
       token: folderModel.token,
-      parentFolderId: folderModel.parentIdFolder,
+      parentFolderId: folderModel.parentFolderId,
       folderName: folderModel.name
     }
 
@@ -36,7 +36,7 @@ export class FolderUseCase implements FolderUseCaseContract {
     if (goFileFolder.isLeft()) return internalError(`Message: ${goFileFolder.value.message}`)
 
     const folderEntity: FolderEntity = {
-      parentIdFolder: goFileFolder.value.data.data.id,
+      folderId: goFileFolder.value.data.data.id,
       name: goFileFolder.value.data.data.name
     }
 

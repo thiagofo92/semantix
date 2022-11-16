@@ -4,7 +4,8 @@ import { FileServiceMemory, FolderServiceMemory } from '@test/services/mock/db/m
 import { RequesHttpsGoFileFake } from '@test/services/mock/request-https-gofile-fake'
 import { FileUseCase } from '@/app/use-case/file-use-case'
 import { FileCreateError } from '@/app/errors/file-error'
-import { left } from '@/shared/error/Either'
+import { left, right } from '@/shared/error/Either'
+import { FolderNotFoundError } from '@/app/errors/folder-error'
 
 interface Factory {
   sut: FileUseCase
@@ -26,19 +27,20 @@ function factoryFileUseCase (): Factory {
 
 describe('Test file use case', () => {
   test('Success to create file', async () => {
-    const { sut } = factoryFileUseCase()
+    const { sut, folderServiceMemory } = factoryFileUseCase()
     const fileModel = fileModelMock()
+    vi.spyOn(folderServiceMemory, 'findByName').mockResolvedValueOnce(right({ idFolder: '12345' }))
     const result = await sut.create(fileModel)
 
     expect(result.data).toStrictEqual(true)
   })
 
-  test('Error to create file', async () => {
+  test('Error to create file - Folder not found', async () => {
     const { sut, fileServiceMemory, folderServiceMemory } = factoryFileUseCase()
     const fileModel = fileModelMock()
-    vi.spyOn(folderServiceMemory, 'findByName').mockResolvedValueOnce(left(new FileCreateError('Test')))
+    vi.spyOn(folderServiceMemory, 'findByName').mockResolvedValueOnce(right(null))
     const result = await sut.create(fileModel)
 
-    expect(result.statusCode).toStrictEqual(500)
+    expect(result.statusCode).toStrictEqual(204)
   })
 })

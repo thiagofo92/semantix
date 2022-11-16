@@ -9,8 +9,8 @@ import { FolderEntity } from '@/core/entities'
 import { faker } from '@faker-js/faker'
 
 const folderMock: FolderEntity = {
-  parentFolderId: faker.datatype.uuid(),
-  folderName: 'folder-test'
+  folderId: faker.datatype.uuid(),
+  name: 'folder-test'
 }
 
 describe('# Folder Tes', () => {
@@ -46,12 +46,12 @@ describe('# Folder Tes', () => {
     const folderService = new FolderServiceMongo()
 
     const result = await folderService.create(folderMock)
-    const folder = await folderService.findByName(folderMock.folderName)
+    const folder = await folderService.findByName(folderMock.name)
 
     expect(result.value).toStrictEqual(true)
     if (folder.isLeft()) throw folder.value
 
-    expect(folder.value.idFolder).toStrictEqual(folderMock.parentFolderId)
+    expect(folder.value!.idFolder).toStrictEqual(folderMock.folderId)
   })
 
   test('Error to find folder by name', async () => {
@@ -68,6 +68,6 @@ describe('# Folder Tes', () => {
 
     if (folder.isLeft()) throw folder.value
 
-    expect(folder.value.idFolder).toStrictEqual('')
+    expect(folder.value).toBeNull()
   })
 })

@@ -1,5 +1,5 @@
-import { FolderEntity } from '@/core/entities'
-
-export type FolderModel = FolderEntity & {
+export interface FolderModel {
+  parentFolderId: string
+  name: string
   token: string
 }

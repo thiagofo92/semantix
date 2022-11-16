@@ -1,5 +1,4 @@
 import { FileUseCaseContract } from '@/core/contract/file-contract'
-import { FolderNotFoundError } from '../errors/folder-error'
 import { internalError, notFound, success, successToCreate } from '../helpers/response-helpers'
 import { FileUploadModel } from '../models/file-model'
 import { ResponseModel } from '../presenters/model/response-model'
@@ -17,13 +16,9 @@ export class FileUseCase implements FileUseCaseContract {
   async create (fileUpload: FileUploadModel): Promise<ResponseModel> {
     const result = await this.folderService.findByName(fileUpload.name)
 
-    if (result.isLeft()) {
-      if (result.value instanceof FolderNotFoundError) {
-        return notFound('Name not found, create the folder before upload the file')
-      }
+    if (result.isLeft()) return internalError(result.value.message)
 
-      return internalError(result.value.message)
-    }
+    if (!result.value) return notFound('Folder name not found')
 
     return successToCreate(true)
   }

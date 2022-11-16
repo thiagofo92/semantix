@@ -21,7 +21,7 @@ export class FolderServiceMemory implements FolderRepository {
       if (!result) return right(null)
 
       return right({
-        idFolder: result.parentIdFolder
+        idFolder: result.folderId
       })
     } catch (error: any) {
       return left(new FolderFindByIdError('Folder Service memory'))

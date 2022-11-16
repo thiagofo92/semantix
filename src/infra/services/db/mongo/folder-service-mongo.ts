@@ -8,8 +8,8 @@ export class FolderServiceMongo implements FolderRepository {
   async create (folder: FolderEntity): Promise<Either<FolderCreateError, boolean>> {
     try {
       await FolderModel.create({
-        id_folder: folder.parentFolderId,
-        name: folder.folderName
+        id_folder: folder.folderId,
+        name: folder.name
       })
       return right(true)
     } catch (error: any) {
@@ -17,13 +17,16 @@ export class FolderServiceMongo implements FolderRepository {
     }
   }
 
-  async findByName (name: string): Promise<Either<FolderFindByIdError, { idFolder: string }>> {
+  async findByName (name: string): Promise<Either<FolderFindByIdError, { idFolder: string } | null>> {
     try {
       const folder = await FolderModel.findOne({
         name
       })
+
+      if (!folder) return right(null)
+
       return right({
-        idFolder: folder ? folder.id_folder : ''
+        idFolder: folder.id_folder
       })
     } catch (error: any) {
       return left(new FolderFindByIdError(error.message))
