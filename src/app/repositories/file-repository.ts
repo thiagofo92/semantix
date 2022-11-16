@@ -4,6 +4,6 @@ import { FileAlreadyCreateError, FileCreateError, FileDeleteError, FileFindByNam
 
 export interface FileRepository {
   create: (file: FileEntity) => Promise<Either<FileCreateError | FileAlreadyCreateError, boolean>>
-  findByName: (name: string) => Promise<Either<FileFindByNameError, any>>
+  findByName: (name: string) => Promise<Either<FileFindByNameError, FileEntity | null>>
   del: (file: FileEntity) => Promise<Either<FileDeleteError, boolean>>
 }
