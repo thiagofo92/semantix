@@ -39,13 +39,16 @@ void (async () => {
     const user = await xmlUseCase.getUsers({ url, limit: '1', page: page.toString() })
 
     if (user.length <= 0) break
+    const addressPromise = xmlUseCase.getAddress(`${url}/${user[0].id}/address`)
+    const contactPromie = xmlUseCase.getContact(`${url}/${user[0].id}/contacts`)
 
-    usersAddress.push(...await xmlUseCase.getAddress(`${url}/${user[0].id}/address`))
+    const [address, contact] = await Promise.all([addressPromise, contactPromie])
 
-    usersContact.push(...await xmlUseCase.getContact(`${url}/${user[0].id}/contacts`))
+    usersAddress.push(...address)
+    usersContact.push(...contact)
 
     users.push(...user)
-    if (count >= 29) {
+    if (count >= 30) {
       await sleep(delay)
       count = 0
     }
@@ -70,6 +73,7 @@ void (async () => {
   await personUseCase.createMany(personModel)
 
   await MongoClient.disconnect()
+
   async function sleep (min: number): Promise<void> {
     return await new Promise((resolve, reject) => setTimeout(_ => resolve(), min))
   }
