@@ -18,7 +18,7 @@ import {
 import { faker } from '@faker-js/faker'
 import qs from 'qs'
 
-export class RequesHttpsGoFIleFake implements RequestHttpsRepository {
+export class RequesHttpsGoFileFake implements RequestHttpsRepository {
   async get <T = any>(url: string, options?: RequestOptions): Promise<Either<RequestHttpsGetError, ResponseHttp<T>>> {
     const server: GoFileResponseServerEntity = {
       status: 'ok',
