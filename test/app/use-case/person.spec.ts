@@ -1,5 +1,5 @@
 import { describe, vi, expect, test } from 'vitest'
-import { PersonService } from '@/infra/services/db/memory'
+import { PersonService } from '@test/services/mock/db/memory'
 import { PersonUseCase } from '@/app/use-case'
 import { PersonCreateError } from '@/app/errors/person-error'
 import { left } from '@/shared/error/Either'
