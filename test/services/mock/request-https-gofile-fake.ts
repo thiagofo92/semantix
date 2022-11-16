@@ -62,8 +62,8 @@ export class RequesHttpsGoFIleFake implements RequestHttpsRepository {
         code: '',
         createTime: 0,
         id: faker.datatype.uuid(),
-        parentFolder: data.parentFolderId?.toString(),
-        name: data.folderName?.toString(),
+        parentFolder: data.parentFolderId?.toString() || '',
+        name: data.folderName?.toString() || '',
         type: ''
       }
     }
