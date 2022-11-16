@@ -3,7 +3,6 @@ import { fileModelMock } from '@test/data/mock/model'
 import { FileServiceMemory, FolderServiceMemory } from '@test/services/mock/db/memory'
 import { RequesHttpsGoFileFake } from '@test/services/mock/request-https-gofile-fake'
 import { FileUseCase } from '@/app/use-case/file-use-case'
-import { FileCreateError } from '@/app/errors/file-error'
 import { left, right } from '@/shared/error/Either'
 
 interface Factory {
