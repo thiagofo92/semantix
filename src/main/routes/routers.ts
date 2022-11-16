@@ -6,6 +6,12 @@ import { factoryFileController, factoryFolderController } from '../factories/con
 export class Routers {
   constructor (private readonly router: Router) {}
 
+  private test (): void {
+    this.router.get('/test', (req, res) => {
+      res.send('ok')
+    })
+  }
+
   private folder (): void {
     const controller = factoryFolderController()
     this.router.post('/folder/create', ExpressAdapter(controller.create))
@@ -18,6 +24,7 @@ export class Routers {
   }
 
   build (): Router {
+    this.test()
     this.folder()
     this.file()
 
