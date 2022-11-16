@@ -1,9 +1,10 @@
 import RateLimit, { RateLimitRequestHandler } from 'express-rate-limit'
+import { MIN } from '../util/time-milise'
 
 const rateLimit: RateLimitRequestHandler = RateLimit({
-  windowMs: 1 * 50 * 1000,
+  windowMs: MIN * 1,
   max: 25,
-  headers: false
+  headers: true
 })
 
 export { rateLimit }
