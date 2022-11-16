@@ -37,6 +37,7 @@ export class RequestHttps implements RequestHttpsRepository {
       const result = await Axios.post(url, body, {
         headers: { ...options?.headers }
       })
+
       const response: ResponseHttp<T> = {
         statusCode: result.status,
         text: result.statusText,
@@ -64,10 +65,11 @@ export class RequestHttps implements RequestHttpsRepository {
     }
   }
 
-  async del <T = any>(url: string, options?: RequestOptions): Promise<Either<RequestHttpsDelError, ResponseHttp<T>>> {
+  async del <T = any>(url: string, body: any, options?: RequestOptions): Promise<Either<RequestHttpsDelError, ResponseHttp<T>>> {
     try {
       const result = await Axios.delete(url, {
-        headers: { ...options?.headers }
+        headers: { ...options?.headers },
+        data: body
       })
       const response: ResponseHttp<T> = {
         statusCode: result.status,
