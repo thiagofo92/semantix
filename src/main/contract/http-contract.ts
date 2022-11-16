@@ -1,7 +1,7 @@
 import { RequestOptions as RequestOptionsHttps } from 'https'
 import { RequestOptions as RequestOptionsHttp } from 'http'
 
-export type RequestParams = 'body' | 'params' | 'query'
+export type RequestParams = 'body' | 'params' | 'query' | 'file'
 
 export type RequestContract<T = any> = Record<RequestParams, T>
 export interface ResponseContract { statusCode: number, data: any }
