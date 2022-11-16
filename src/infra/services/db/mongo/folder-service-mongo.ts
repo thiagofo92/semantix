@@ -8,8 +8,8 @@ export class FolderServiceMongo implements FolderRepository {
   async create (folder: FolderEntity): Promise<Either<FolderCreateError, boolean>> {
     try {
       await FolderModel.create({
-        id_folder: folder.idFolder,
-        name: folder.name
+        id_folder: folder.parentFolderId,
+        name: folder.folderName
       })
       return right(true)
     } catch (error: any) {

@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker'
 
 export function folderModelMock (): FolderModel {
   return {
-    idFolder: faker.datatype.uuid(),
+    parentIdFolder: faker.datatype.uuid(),
     name: faker.lorem.words(1)
   }
 }

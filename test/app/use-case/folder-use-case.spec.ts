@@ -49,6 +49,8 @@ describe('# Folder use case', () => {
     const folder = await sut.findByName(folderMock.name)
 
     expect(result.data).toStrictEqual(true)
-    expect(folder.data.idFolder).toStrictEqual(folderMock.idFolder)
+
+    const exist = !!folder.data.idFolder
+    expect(exist).toStrictEqual(true)
   })
 })

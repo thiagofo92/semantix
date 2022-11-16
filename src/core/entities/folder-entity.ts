@@ -1,4 +1,4 @@
 export interface FolderEntity {
-  idFolder: string
+  parentIdFolder: string
   name: string
 }

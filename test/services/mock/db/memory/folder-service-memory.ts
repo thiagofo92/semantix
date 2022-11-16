@@ -14,12 +14,14 @@ export class FolderServiceMemory implements FolderRepository {
     }
   }
 
-  async findByName (name: string): Promise<Either<FolderFindByIdError, { idFolder: string }>> {
+  async findByName (name: string): Promise<Either<FolderFindByIdError, { idFolder: string } | null>> {
     try {
       const result = this.folder.find(item => item.name === name)
 
+      if (!result) return right(null)
+
       return right({
-        idFolder: result ? result.idFolder : ''
+        idFolder: result.parentIdFolder
       })
     } catch (error: any) {
       return left(new FolderFindByIdError('Folder Service memory'))
