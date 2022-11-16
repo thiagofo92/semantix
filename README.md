@@ -87,7 +87,7 @@
   * O script consume 30 dados dps espera 1min e consume mais 30, repete esse processo até não ter mais dados na [API Tech](https://linkapi-desafio-tech.gateway.linkapi.solutions/v1/docs#authentication)
   * Os dados são salvos no **MongoDB**
 
-## Detalhes sobre a API para genrenciar pastas
+## Detalhes sobre a API para gerenciar pastas
   * Executar o comando **npx run dev:server** ou **yarn dev:server** para iniciar o servidor
   * O servidor possui rotas para criar pastas, deletar, ou procurar
   * O Projeto possui um arquivo JSON do Postman com as rotas da API
