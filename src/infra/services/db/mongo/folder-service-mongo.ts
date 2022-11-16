@@ -17,7 +17,7 @@ export class FolderServiceMongo implements FolderRepository {
     }
   }
 
-  async findById (name: string): Promise<Either<FolderFindByIdError, { idFolder: string }>> {
+  async findByName (name: string): Promise<Either<FolderFindByIdError, { idFolder: string }>> {
     try {
       const folder = await FolderModel.findOne({
         name
