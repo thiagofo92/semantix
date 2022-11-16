@@ -23,24 +23,30 @@ describe('# Folder use case', () => {
   test('Success to create folder', async () => {
     const { sut } = factoryFolderUseCase()
     const folderMock = folderModelMock()
+
     const result = await sut.create(folderMock)
-    expect(result).toStrictEqual(true)
+
+    expect(result.data).toStrictEqual(true)
   })
 
   test('Fail to create folder', async () => {
     const { sut, folderServiceMemory } = factoryFolderUseCase()
     vi.spyOn(folderServiceMemory, 'create').mockResolvedValueOnce(left(new FolderCreateError('')))
+
     const folderMock = folderModelMock()
     const result = await sut.create(folderMock)
-    expect(result).toStrictEqual(false)
+
+    expect(result.statusCode).toStrictEqual(500)
   })
 
   test('Success to find folder by name', async () => {
     const { sut } = factoryFolderUseCase()
     const folderMock = folderModelMock()
+
     const result = await sut.create(folderMock)
     const folder = await sut.findByName(folderMock.name)
-    expect(result).toStrictEqual(true)
-    expect(folder.idFolder).toStrictEqual(folderMock.idFolder)
+
+    expect(result.data).toStrictEqual(true)
+    expect(folder.data.idFolder).toStrictEqual(folderMock.idFolder)
   })
 })
