@@ -32,6 +32,8 @@
     "test": "vitest",
     "test:one": "vitest xml-to-json.spec.ts",
     "test:cov": "vitest run --coverage",
+    "mongo:up" :"docker-compose -f ./docker/docker-compose.yml up -d",
+    "mongo:build" :"docker-compose -f ./docker/docker-compose.yml up --build -d",
     "lint": "eslint ./src --ext .ts"
   },
   "dependencies": {
