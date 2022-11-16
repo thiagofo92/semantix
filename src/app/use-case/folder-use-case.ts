@@ -7,6 +7,7 @@ import { FolderModel } from '../models'
 import { ResponseModel } from '../presenters/model/response-model'
 import { RequestHttpsRepository } from '../repositories'
 import { FolderRepository } from '../repositories/folder-repository'
+import { goFile } from '../util/go-file'
 
 export class FolderUseCase implements FolderUseCaseContract {
   constructor (
@@ -31,7 +32,7 @@ export class FolderUseCase implements FolderUseCaseContract {
       }
     }
 
-    const goFileFolder = await this.requestHttps.put<GoFileResponseCreateFolderEntity>('', data, options)
+    const goFileFolder = await this.requestHttps.put<GoFileResponseCreateFolderEntity>(goFile.urlCreateFolder, data, options)
 
     if (goFileFolder.isLeft()) return internalError(`Message: ${goFileFolder.value.message}`)
 

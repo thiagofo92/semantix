@@ -5,6 +5,6 @@ export function fileModelMock (): FileUploadModel {
   return {
     token: faker.datatype.uuid(),
     file: faker.image.image(),
-    folderId: faker.datatype.uuid()
+    name: faker.lorem.words(1)
   }
 }

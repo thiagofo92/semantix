@@ -5,7 +5,6 @@ import { RequesHttpsGoFileFake } from '@test/services/mock/request-https-gofile-
 import { FileUseCase } from '@/app/use-case/file-use-case'
 import { FileCreateError } from '@/app/errors/file-error'
 import { left, right } from '@/shared/error/Either'
-import { FolderNotFoundError } from '@/app/errors/folder-error'
 
 interface Factory {
   sut: FileUseCase
@@ -35,12 +34,21 @@ describe('Test file use case', () => {
     expect(result.data).toStrictEqual(true)
   })
 
-  test('Error to create file - Folder not found', async () => {
-    const { sut, fileServiceMemory, folderServiceMemory } = factoryFileUseCase()
+  test('Folder not found', async () => {
+    const { sut, folderServiceMemory } = factoryFileUseCase()
     const fileModel = fileModelMock()
     vi.spyOn(folderServiceMemory, 'findByName').mockResolvedValueOnce(right(null))
     const result = await sut.create(fileModel)
 
     expect(result.statusCode).toStrictEqual(204)
+  })
+
+  test('Error to create file', async () => {
+    const { sut, folderServiceMemory } = factoryFileUseCase()
+    const fileModel = fileModelMock()
+    vi.spyOn(folderServiceMemory, 'findByName').mockResolvedValueOnce(left(new Error()))
+    const result = await sut.create(fileModel)
+
+    expect(result.statusCode).toStrictEqual(500)
   })
 })
